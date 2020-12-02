@@ -2,7 +2,7 @@
 # ANDROID TARGETS: https://developer.android.com/ndk/guides/other_build_systems
 # --------------------------------------------------------------------------------
 
-[target.armv7a-linux-androideabi]
+[target.armv7-linux-androideabi]
 ar = "ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/arm-linux-androideabi-ar"
 linker = "ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang"
 

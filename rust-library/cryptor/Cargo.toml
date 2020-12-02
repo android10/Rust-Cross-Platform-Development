@@ -1,0 +1,13 @@
+[package]
+name = "cryptor"
+version = "0.1.0"
+authors = ["Fernando Cejas <fcejas@gmail.com>"]
+edition = "2018"
+
+[target.'cfg(target_os="android")'.dependencies]
+jni = { version = "0.5", default-features = false }
+
+[lib]
+crate-type = ["dylib"]
+
+[dependencies]
