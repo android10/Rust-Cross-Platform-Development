@@ -28,21 +28,21 @@ mod tests {
 
     #[test]
     fn test_encrypt_string() {
-        let to_encrypt = "hello_world";
-        let encrypted = "aGVsbG9fd29ybGQ=";
+        let to_encrypt = "hello_world_from_rust";
+        let str_encoded_b64 = "aGVsbG9fd29ybGRfZnJvbV9ydXN0";
 
-        let result = encrypt(&to_encrypt);
+        let encrypted_result = encrypt(&to_encrypt);
         
-        assert_eq!(encrypted, result);
+        assert_eq!(str_encoded_b64, encrypted_result);
     }
 
     #[test]
     fn test_decrypt_string() {
-        let to_decrypt = "aGVsbG9fd29ybGQ=";
-        let decrypted = "hello_world";
+        let str_encoded_b64 = "aGVsbG9fd29ybGRfZnJvbV9ydXN0";
+        let str_decoded_b64 = "hello_world_from_rust";
 
-        let result = decrypt(&to_decrypt);
+        let decrypted_result = decrypt(&str_encoded_b64);
         
-        assert_eq!(decrypted, result);
+        assert_eq!(str_decoded_b64, decrypted_result);
     }
 }
