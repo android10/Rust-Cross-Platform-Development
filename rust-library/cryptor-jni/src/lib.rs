@@ -9,51 +9,70 @@ pub mod android {
     use self::jni::JNIEnv;
     use super::*;
 
+    /**
+     * Encrypt a String.
+     */
     #[no_mangle]
     pub unsafe extern "C" fn Java_com_fernandocejas_cryptor_encrypt(
         env: JNIEnv,
         _: JClass,
-        java_pattern: JString,
+        java_string: JString,
     ) -> jstring {
 
         // Call the Rust Library for encryption
-        let string = encrypt(
-            env.get_string(java_pattern)
-                .expect("invalid Pattern String")
-                .as_ptr(),
-        );
+        let encrypted_str = encrypt(get_string(java_string));
 
         // Retake pointer so that we can use it below and allow 
         // memory to be freed when it goes out of scope.
-        let string_ptr = CString::from_raw(string);
-        let output = env
-            .new_string(string_ptr.to_str().unwrap())
-            .expect("Couldn't create Java String!");
+        let encrypted_str_ptr = CString::from_raw(encrypted_str);
+        let output = get_string(encrypted_str_ptr.to_str().unwrap());
 
         output.into_inner()
     }
 
+    /**
+     * Decrypt a String.
+     */
     #[no_mangle]
     pub unsafe extern "C" fn Java_com_fernandocejas_cryptor_decrypt(
         env: JNIEnv,
         _: JClass,
-        java_pattern: JString,
+        java_string: JString,
     ) -> jstring {
 
         // Call the Rust Library for decryption
-        let string = decrypt(
-            env.get_string(java_pattern)
-                .expect("invalid pattern string")
-                .as_ptr(),
-        );
+        let decrypted_str = decrypt(get_string(java_string));
 
         // Retake pointer so that we can use it below and allow 
         // memory to be freed when it goes out of scope.
-        let string_ptr = CString::from_raw(string);
-        let output = env
-            .new_string(string_ptr.to_str().unwrap())
-            .expect("Couldn't create Java String!");
+        let decrypted_str_ptr = CString::from_raw(decrypted_str);
+        let output = get_string(decrypted_str_ptr.to_str().unwrap());
 
         output.into_inner()
     }    
+
+    /**
+     * Get and check a valid Java String
+     */
+    fn get_string(java_string: JString) {
+        env.get_string(java_string)
+        .expect("invalid Pattern String")
+        .as_ptr()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn test_cryptor_encrypt() {
+        // TODO
+        assert_eq!(true, true);
+    }
+
+    #[test]
+    fn test_cryptor_decrypt() {
+        // TODO
+        assert_eq!(true, true);
+    }
 }

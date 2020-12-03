@@ -14,10 +14,7 @@ pub fn encrypt(to: &str) -> String {
  */
 pub fn decrypt(from: &str) -> String {
     let bytes = base64::decode(from).unwrap();
-    let str_result = match String::from_utf8(bytes) {
-        Ok(value) => value,
-        Err(error) => panic!("Invalid UTF-8 sequence: {}", error),
-    };
+    let str_result = String::from_utf8(bytes).expect("Found invalid UTF-8");
 
     str_result.to_owned()
 }
