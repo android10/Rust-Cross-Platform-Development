@@ -4,6 +4,12 @@ version = "0.1.0"
 authors = ["Fernando Cejas <fcejas@gmail.com>"]
 edition = "2018"
 
+# See more keys and their definitions at 
+# https://doc.rust-lang.org/cargo/reference/manifest.html
+
+# Dynamic Library. 
+# See: https://doc.rust-lang.org/reference/linkage.html
+# See: https://doc.rust-lang.org/cargo/reference/cargo-targets.html
 [lib]
 crate-type = ["dylib"]
 

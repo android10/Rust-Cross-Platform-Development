@@ -1,4 +1,9 @@
-/// Expose the JNI interface for Android
+/// [cfg(target_os = "android")]: Compiler flag ("cfg") which exposes
+/// the JNI interface for targeting Android in this case
+/// 
+/// [allow(non_snake_case)]: Tells the compiler not to warn if
+/// we are not using snake_case for a variable or function names.
+/// For Android Development we want to be consistent with code style. 
 #[cfg(target_os = "android")]
 #[allow(non_snake_case)]
 pub mod android {
@@ -20,7 +25,7 @@ pub mod android {
     ) -> jstring {
 
         // Call the Rust Library for encryption
-        let encrypted_str = encrypt(get_string(java_string));
+        let encrypted_str = encrypt(get_string(env, java_string));
 
         // Retake pointer so that we can use it below and allow 
         // memory to be freed when it goes out of scope.
@@ -41,7 +46,7 @@ pub mod android {
     ) -> jstring {
 
         // Call the Rust Library for decryption
-        let decrypted_str = decrypt(get_string(java_string));
+        let decrypted_str = decrypt(get_string(env, java_string));
 
         // Retake pointer so that we can use it below and allow 
         // memory to be freed when it goes out of scope.
@@ -54,7 +59,10 @@ pub mod android {
     /**
      * Get and check a valid Java String
      */
-    fn get_string(java_string: JString) {
+    fn get_string(
+        env: JNIEnv, 
+        java_string: JString) {
+
         env.get_string(java_string)
         .expect("invalid Pattern String")
         .as_ptr()
