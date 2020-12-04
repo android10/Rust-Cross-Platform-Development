@@ -26,4 +26,23 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    defaultConfig {
+        // See: 'variants.gradle.kts' if you want to configure the ndk block
+        // for each product flavor in your build configuration.
+        ndk {
+            // Specifies the ABI configurations of your native
+            // libraries Gradle should build and package with your APK.
+            // Here is a list of supported abis:
+            // https://developer.android.com/ndk/guides/abis
+            abiFilters.addAll(
+                setOf(
+                    "armeabi-v7a",
+                    "arm64-v8a",
+                    "x86",
+                    "x86_64"
+                )
+            )
+        }
+    }
 }
