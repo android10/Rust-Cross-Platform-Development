@@ -17,4 +17,14 @@ package com.fernandocejas.sample
 
 import android.app.Application
 
-class AndroidApplication : Application()
+class AndroidApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        loadJNILibraries()
+    }
+
+    private fun loadJNILibraries() {
+        // Load the Crypto Rust Library
+        System.loadLibrary("cryptor_jni")
+    }
+}

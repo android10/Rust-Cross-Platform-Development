@@ -1,8 +1,7 @@
 [workspace]
 members = [ 
     "cryptor", 
-    "cryptor-jni", 
-    "cryptor-c" 
+    "cryptor-jni"
 ]
 
 # In case we want specify a default sub-project, 

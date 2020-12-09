@@ -17,6 +17,10 @@ package com.fernandocejas.sample.core.extension
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.view.inputmethod.InputMethodManager
 
 val Context.connectivityManager: ConnectivityManager get() =
     this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+val Context.inputManager: InputMethodManager get() =
+    this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

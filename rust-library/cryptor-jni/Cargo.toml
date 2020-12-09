@@ -3,6 +3,7 @@ name = "cryptor-jni"
 version = "0.1.0"
 authors = ["Fernando Cejas <fcejas@gmail.com>"]
 edition = "2018"
+build = "build.rs"
 
 # See more keys and their definitions at 
 # https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -12,7 +13,7 @@ jni = { version = "0.5", default-features = false }
 
 # Dynamic Library: https://doc.rust-lang.org/reference/linkage.html
 [lib]
-crate-type = ["dylib"]
+crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
 cryptor = { path = "../cryptor", version = "0.1" }

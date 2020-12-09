@@ -1,4 +1,13 @@
 <resources>
-    <string name="app_name">Android Trinity</string>
-    <string name="hello">Hello World!!!</string>
+    <string name="app_name">Rust on Android - Cryptor</string>
+
+    <string name="txt_encrypt">Encrypt</string>
+    <string name="txt_encrypted">ENCRYPTED</string>
+    <string name="txt_encrypt_hint">Text to ENCRYPT</string>
+
+    <string name="txt_decrypt">Decrypt</string>
+    <string name="txt_decrypted">DECRYPTED</string>
+    <string name="txt_decrypt_hint">Text to DECRYPT</string>
+
+    <string name="error_empty_input">Field cannot be EMPTY</string>
 </resources>

@@ -7,11 +7,11 @@ edition = "2018"
 # See more keys and their definitions at 
 # https://doc.rust-lang.org/cargo/reference/manifest.html
 
-# Dynamic Library. 
+# Static Library. 
 # See: https://doc.rust-lang.org/reference/linkage.html
 # See: https://doc.rust-lang.org/cargo/reference/cargo-targets.html
 [lib]
-crate-type = ["dylib"]
+crate-type = ["rlib"]
 
 [dependencies]
 base64 = "0.13.0"

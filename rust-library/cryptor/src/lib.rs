@@ -13,8 +13,11 @@ pub fn encrypt(to: &str) -> String {
  * Decrypt a String.
  */
 pub fn decrypt(from: &str) -> String {
-    let bytes = base64::decode(from).unwrap();
-    let str_result = String::from_utf8(bytes).expect("Found invalid UTF-8");
+    let bytes = base64::decode(String::from(from)).unwrap();
+    
+
+    // let bytes = base64::decode("aGVsbG8gd29ybGQ=").unwrap();
+    let str_result = String::from_utf8(bytes).unwrap();
 
     str_result.to_owned()
 }
