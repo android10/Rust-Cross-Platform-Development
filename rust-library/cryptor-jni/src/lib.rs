@@ -12,7 +12,7 @@ pub mod android {
     use self::jni::JNIEnv;
     use self::jni::objects::{JClass, JString};
     use self::jni::sys::{jstring};
-    use std::ffi::{CStr, CString};
+    use std::ffi::{CStr};
     use std::os::raw::c_char;
     
     use cryptor::encrypt;
@@ -30,7 +30,7 @@ pub mod android {
 
         // Call the Rust Library for encryption
         let to = get_string(&env, java_string); // *const c_char
-        let to_encrypt = unsafe { CStr::from_ptr(to).to_str().unwrap() };
+        let to_encrypt = CStr::from_ptr(to).to_str().unwrap();
 
         let encrypted_str = encrypt(to_encrypt);
 
@@ -56,7 +56,7 @@ pub mod android {
 
         // Call the Rust Library for decryption
         let to = get_string(&env, java_string); // *const c_char
-        let to_decrypt = unsafe { CStr::from_ptr(to).to_str().unwrap() };
+        let to_decrypt = CStr::from_ptr(to).to_str().unwrap();
 
         let decrypted_str = decrypt(to_decrypt);
 

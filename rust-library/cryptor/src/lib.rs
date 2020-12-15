@@ -1,10 +1,12 @@
 extern crate base64;
 
+use base64::{encode, decode};
+
 /**
  * Encrypt a String.
  */
 pub fn encrypt(to: &str) -> String {
-    let b64 = base64::encode(to);
+    let b64 = encode(String::from(to));
     
     b64.to_owned()
 }
@@ -13,11 +15,8 @@ pub fn encrypt(to: &str) -> String {
  * Decrypt a String.
  */
 pub fn decrypt(from: &str) -> String {
-    let bytes = base64::decode(String::from(from)).unwrap();
-    
-
-    // let bytes = base64::decode("aGVsbG8gd29ybGQ=").unwrap();
-    let str_result = String::from_utf8(bytes).unwrap();
+    let b64_bytes = decode(String::from(from)).unwrap();
+    let str_result = String::from_utf8(b64_bytes).unwrap();
 
     str_result.to_owned()
 }
