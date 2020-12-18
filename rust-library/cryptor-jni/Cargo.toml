@@ -17,3 +17,7 @@ crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
 cryptor = { path = "../cryptor", version = "0.1" }
+
+[build-dependencies]
+serde = { version = '1.0.118', features = ['derive'] }
+toml = "0.5"

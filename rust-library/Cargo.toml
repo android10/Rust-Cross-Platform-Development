@@ -7,5 +7,4 @@ members = [
 # In case we want specify a default sub-project, 
 # uncomment. All cargo root commands will execute
 # commands related to the default member
-
 # default-members = [ "cryptor" ]
