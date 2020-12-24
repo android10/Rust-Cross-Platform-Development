@@ -7,18 +7,14 @@
 
 
 use std::env;
-
 use std::fs;
 use std::fs::File;
 use std::path::Path;
 use std::io::Write;
 use std::io::prelude::*;
-
-
 use serde::Serialize;
 use std::{collections::BTreeMap};
 use toml;
-
 
 #[derive(Default, Serialize)]
 struct Targets<'a> {
@@ -45,37 +41,54 @@ fn main() {
     // println!("cargo:rerun-if-changed=build.rs");
 
     let android_ndk_dir = env::var("ANDROID_NDK_HOME").unwrap();
-    let android_toolchains_dir = format!("{ndk}/{toolchains}", ndk=android_ndk_dir, toolchains="/toolchains/llvm/prebuilt"); 
+    let android_toolchains_dir = format!("{ndk}{toolchains}", ndk=android_ndk_dir, toolchains="/toolchains/llvm/prebuilt"); 
 
     let mut targets_config = Targets::default();
+
+    let armv7_name = "armv7-linux-androideabi";
+    let armv7_ar = format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/arm-linux-androideabi-ar"); 
+    let armv7_linker = format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/armv7a-linux-androideabi21-clang");
     targets_config.targets.insert(
-        "armv7-linux-androideabi",
-        TargetConfig {
-            ar: format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/arm-linux-androideabi-ar"),
-            linker: format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/armv7a-linux-androideabi21-clang"),
+        &armv7_name,
+        TargetConfig { 
+            ar: &armv7_ar, 
+            linker: &armv7_linker 
         },
     );
+
+    let aarch64_name = "aarch64-linux-android";
+    let aarch64_ar = format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/aarch64-linux-android-ar");
+    let aarch64_linker = format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/aarch64-linux-android21-clang");
     targets_config.targets.insert(
-        "aarch64-linux-android",
+        &aarch64_name,
         TargetConfig {
-            ar: format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/aarch64-linux-android-ar"),
-            linker: format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/aarch64-linux-android21-clang"),
+            ar: &aarch64_ar,
+            linker: &aarch64_linker,
         },
     );
+
+    let i686_name = "i686-linux-android";
+    let i686_ar = format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/i686-linux-android-ar");
+    let i686_linker = format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/i686-linux-android21-clang");
     targets_config.targets.insert(
-        "i686-linux-android",
+        &i686_name,
         TargetConfig {
-            ar: format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/i686-linux-android-ar"),
-            linker: format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/i686-linux-android21-clang"),
+            ar: &i686_ar,
+            linker: &i686_linker,
         },
     );
+
+    let x86_64_name = "x86_64-linux-android";
+    let x86_64_ar = format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/x86_64-linux-android-ar");
+    let x86_64_linker = format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/x86_64-linux-android21-clang");
     targets_config.targets.insert(
-        "x86_64-linux-android",
+        &x86_64_name,
         TargetConfig {
-            ar: format!("{toolchain}{ar}", toolchain=android_toolchains_dir, ar="/linux-x86_64/bin/x86_64-linux-android-ar"),
-            linker: format!("{toolchain}{linker}", toolchain=android_toolchains_dir, linker="/linux-x86_64/bin/x86_64-linux-android21-clang"),
+            ar: &x86_64_ar,
+            linker: &x86_64_linker,
         },
     );
+
     let toml = toml::to_string(&targets_config).unwrap();
 
 
