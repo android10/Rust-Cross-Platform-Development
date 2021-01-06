@@ -11,10 +11,11 @@ use std::fs;
 use std::fs::File;
 use std::path::Path;
 use std::io::Write;
-use std::io::prelude::*;
 use serde::Serialize;
 use std::{collections::BTreeMap};
 use toml;
+
+mod release;
 
 #[derive(Default, Serialize)]
 struct Targets<'a> {
@@ -91,15 +92,13 @@ fn main() {
 
     let toml = toml::to_string(&targets_config).unwrap();
 
+    // create_cargo_config_dir();
+    match create_cargo_config_dir() {
+        Err(why) => panic!("Couldn't create configuration dir: {}", why),
+        Ok(_) => println!("Successfully created configuration dir!"),
+    };
 
-
-    create_cargo_config_dir();
-    // match create_cargo_config_dir() {
-    //     Err(why) => panic!("Couldn't create {}: {}", display, why),
-    //     Ok(())
-    // }
-
-    let config_file_path = format!("{dir}/{file}", dir=".cargo", file="config1");
+    let config_file_path = format!("{dir}/{file}", dir=".cargo", file="config");
     let path = Path::new(&config_file_path);
     let display = path.display();
     let mut file = match File::create(&path) {
@@ -113,12 +112,17 @@ fn main() {
         Ok(_) => println!("Successfully wrote to {}", display),
     };
 
-    //TODO: Refactor and extract global stuff
+    //TODO: uncommnet println!("cargo:rerun-if-changed=build.rs")
+    //TODO: Refactor and extract global stuff: Global Configuration in Rust?
     //TODO: Write tests
-    //TODO: Add toolchains to cargo via command
+    //TODO: Add toolchains to cargo via command: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
+    //TODO: post release execution: deploy task to copy all the mentioned architectures to the folders. 
+
+    release::deploy_artifacts();
 }
 
 fn create_cargo_config_dir() -> std::io::Result<()> {
+    // TODO: check if the directory already exists
     fs::create_dir(".cargo")?;
     Ok(())
 }
