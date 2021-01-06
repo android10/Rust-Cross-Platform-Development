@@ -92,9 +92,8 @@ fn main() {
 
     let toml = toml::to_string(&targets_config).unwrap();
 
-    // create_cargo_config_dir();
     match create_cargo_config_dir() {
-        Err(why) => panic!("Couldn't create configuration dir: {}", why),
+        Err(_) => println!("Directory already exists, avoiding step..."),
         Ok(_) => println!("Successfully created configuration dir!"),
     };
 
@@ -121,8 +120,8 @@ fn main() {
     release::deploy_artifacts();
 }
 
+// TODO: This could also be global
 fn create_cargo_config_dir() -> std::io::Result<()> {
-    // TODO: check if the directory already exists
     fs::create_dir(".cargo")?;
     Ok(())
 }
