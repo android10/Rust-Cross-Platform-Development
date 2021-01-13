@@ -15,6 +15,7 @@ use serde::Serialize;
 use std::{collections::BTreeMap};
 use toml;
 
+mod config;
 mod release;
 
 #[derive(Default, Serialize)]
