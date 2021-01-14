@@ -28,13 +28,13 @@ impl AndroidConfig {
 }
 
 #[derive(Default, Serialize)]
-pub struct AndroidTargets<'a> {
+struct AndroidTargets<'a> {
     #[serde(rename(serialize = "target"))]
     targets: HashMap<&'a str, AndroidTargetConfig<'a>>,
 }
 
 #[derive(Serialize)]
-pub struct AndroidTargetConfig<'a> {
+struct AndroidTargetConfig<'a> {
     // Target identifier name to be used by Rust compiler 
     // to generate the specific artifact.
     #[serde(skip_serializing)]
@@ -56,7 +56,7 @@ fn build_linker(linker_path: &str) -> String {
     format!("{toolchain}{linker}", toolchain=AndroidConfig::toolchains_dir(), linker=linker_path)
 } 
 
-pub fn android_targets<'a>() -> AndroidTargets<'a> {
+fn android_targets<'a>() -> AndroidTargets<'a> {
     // let mut android_targets = AndroidTargets::default();
     let mut android_targets = AndroidTargets { targets: HashMap::with_capacity(4) };
 
