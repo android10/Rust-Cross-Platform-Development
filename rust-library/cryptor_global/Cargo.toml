@@ -1,0 +1,10 @@
+[package]
+name = "cryptor_global"
+version = "0.1.0"
+authors = ["Fernando Cejas <fcejas@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]

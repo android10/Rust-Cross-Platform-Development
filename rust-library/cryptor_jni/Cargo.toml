@@ -1,5 +1,5 @@
 [package]
-name = "cryptor-jni"
+name = "cryptor_jni"
 version = "0.1.0"
 authors = ["Fernando Cejas <fcejas@gmail.com>"]
 edition = "2018"
@@ -16,8 +16,9 @@ jni = { version = "0.5", default-features = false }
 crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
-cryptor = { path = "../cryptor", version = "0.1" }
+cryptor = { path = "../cryptor", version = "0.1.0" }
 
 [build-dependencies]
 serde = { version = '1.0.118', features = ['derive'] }
 toml = "0.5"
+cryptor_global = { path = "../cryptor_global", version = "0.1.0" }

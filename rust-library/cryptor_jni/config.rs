@@ -5,13 +5,14 @@ use std::env;
 use std::{collections::HashMap};
 use std::io::Result;
 
-use std::fs;
 use std::fs::File;
 use std::path::Path;
 use std::io::Write;
 
 use serde::Serialize;
 use toml;
+
+use cryptor_global::io;
 
 static ANDROID_NDK_ENV_VAR: &str = "ANDROID_NDK_HOME";
 static ANDROID_TOOLCHAINS_DIR: &str = "/toolchains/llvm/prebuilt";
@@ -27,7 +28,7 @@ impl AndroidConfig {
     }
 }
 
-#[derive(Default, Serialize)]
+#[derive(Serialize)]
 struct AndroidTargets<'a> {
     #[serde(rename(serialize = "target"))]
     targets: HashMap<&'a str, AndroidTargetConfig<'a>>,
@@ -57,7 +58,6 @@ fn build_linker(linker_path: &str) -> String {
 } 
 
 fn android_targets<'a>() -> AndroidTargets<'a> {
-    // let mut android_targets = AndroidTargets::default();
     let mut android_targets = AndroidTargets { targets: HashMap::with_capacity(4) };
 
     let armv7 = AndroidTargetConfig { 
@@ -96,13 +96,12 @@ pub fn create_android_targets_config_file() -> Result<()> {
 
     let targets_config = android_targets();
 
-    let toml = toml::to_string(&targets_config).unwrap();
-
-    match create_cargo_config_dir() {
+    
+    match io::create_cargo_config_dir() {
         Err(_) => println!("Directory already exists, avoiding step..."),
         Ok(_) => println!("Successfully created configuration dir!"),
     };
-
+    
     let config_file_path = format!("{dir}/{file}", dir=".cargo", file="config");
     let path = Path::new(&config_file_path);
     let display = path.display();
@@ -110,8 +109,9 @@ pub fn create_android_targets_config_file() -> Result<()> {
         Err(why) => panic!("Couldn't create {}: {}", display, why),
         Ok(file) => file,
     };
-
-    // Write content to `file`, returns `io::Result<()>`
+    
+    let toml = toml::to_string(&targets_config).unwrap();
+    
     match file.write_all(toml.as_bytes()) {
         Err(why) => panic!("Couldn't write to {}: {}", display, why),
         Ok(_) => println!("Successfully wrote to {}", display),
@@ -120,10 +120,14 @@ pub fn create_android_targets_config_file() -> Result<()> {
     Ok(())
 }
 
-// TODO: This could also be global
-fn create_cargo_config_dir() -> std::io::Result<()> {
-    fs::create_dir(".cargo")?;
-    Ok(())
+#[cfg(test)]
+mod tests {
+    use super::config;
+
+    #[test]
+    fn test_greet() {
+        assert_eq!("Hello, world!", "Hello, world!");
+    }
 }
 
 

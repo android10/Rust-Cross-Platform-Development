@@ -1,5 +1,5 @@
 [package]
-name = "cryptor-c"
+name = "cryptor_c"
 version = "0.1.0"
 authors = ["Fernando Cejas <fcejas@gmail.com>"]
 edition = "2018"
@@ -14,4 +14,4 @@ edition = "2018"
 crate-type = ["dylib"]
 
 [dependencies]
-cryptor = { path = "../cryptor", version = "0.1" }
+cryptor = { path = "../cryptor", version = "0.1.0" }

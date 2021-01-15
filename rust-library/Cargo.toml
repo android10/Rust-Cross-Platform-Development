@@ -1,10 +1,9 @@
 [workspace]
-members = [ 
+members = [
     "cryptor", 
-    "cryptor-jni"
+    "cryptor_jni",
+    "cryptor_global"
 ]
 
-# In case we want specify a default sub-project, 
-# uncomment. All cargo root commands will execute
-# commands related to the default member
-# default-members = [ "cryptor" ]
+[profile.release]
+panic = 'abort'
