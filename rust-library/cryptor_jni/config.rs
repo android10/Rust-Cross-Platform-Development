@@ -96,26 +96,29 @@ pub fn create_android_targets_config_file() -> Result<()> {
 
     let targets_config = android_targets();
 
+    let current_dir = Path::new(".");
+    match current_dir.to_str() {
+        None => panic!("new path is not a valid UTF-8 sequence"),
+        Some(current_dir) => match io::create_cargo_config_dir(current_dir) {
+            Err(_) => println!("Directory already exists, avoiding step..."),
+            Ok(_) => println!("Successfully created configuration dir!"),
+        }
+    }
     
-    match io::create_cargo_config_dir() {
-        Err(_) => println!("Directory already exists, avoiding step..."),
-        Ok(_) => println!("Successfully created configuration dir!"),
-    };
+    // let config_file_path = format!("{dir}/{file}", dir=".cargo", file="config");
+    // let path = Path::new(&config_file_path);
+    // let display = path.display();
+    // let mut file = match File::create(&path) {
+    //     Err(why) => panic!("Couldn't create {}: {}", display, why),
+    //     Ok(file) => file,
+    // };
     
-    let config_file_path = format!("{dir}/{file}", dir=".cargo", file="config");
-    let path = Path::new(&config_file_path);
-    let display = path.display();
-    let mut file = match File::create(&path) {
-        Err(why) => panic!("Couldn't create {}: {}", display, why),
-        Ok(file) => file,
-    };
+    // let toml = toml::to_string(&targets_config).unwrap();
     
-    let toml = toml::to_string(&targets_config).unwrap();
-    
-    match file.write_all(toml.as_bytes()) {
-        Err(why) => panic!("Couldn't write to {}: {}", display, why),
-        Ok(_) => println!("Successfully wrote to {}", display),
-    };
+    // match file.write_all(toml.as_bytes()) {
+    //     Err(why) => panic!("Couldn't write to {}: {}", display, why),
+    //     Ok(_) => println!("Successfully wrote to {}", display),
+    // };
 
     Ok(())
 }

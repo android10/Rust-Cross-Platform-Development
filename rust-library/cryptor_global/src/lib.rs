@@ -9,9 +9,11 @@ pub mod io {
         Ok(())
     }
 
-    pub fn create_cargo_config_dir() -> std::io::Result<()> {
-        //TODO: pass the current path of the directory
-        fs::create_dir(super::CARGO_CONFIG_DIR_NAME)?;
+    pub fn create_cargo_config_dir(parent_dir: &str) -> std::io::Result<()> {
+        let mut full_dir_path: String = String::from(parent_dir);
+        full_dir_path.push_str(super::CARGO_CONFIG_DIR_NAME); 
+
+        fs::create_dir(full_dir_path)?;
         Ok(())
     }
 }

@@ -13,7 +13,7 @@ fn main() {
     // the script by writing to stdout.
     // println!("cargo:rerun-if-changed=build.rs");
 
-    // config::create_android_targets_config_file();
+    config::create_android_targets_config_file();
 
     //TODO: uncommnet println!("cargo:rerun-if-changed=build.rs")
     //TODO: Refactor and extract global stuff: Global Configuration in Rust?
