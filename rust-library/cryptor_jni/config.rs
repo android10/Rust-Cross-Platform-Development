@@ -96,17 +96,7 @@ pub fn create_android_targets_config_file() -> Result<()> {
 
     let targets_config = android_targets();
 
-    let current_dir_path = env::current_dir()?;
-    let current_dir_str = current_dir_path.to_str().unwrap();
-
-    io::create_cargo_config_dir(current_dir_str);
-    // match current_dir {
-    //     None => panic!("new path is not a valid UTF-8 sequence"),
-    //     Some(current_dir) => match io::create_cargo_config_dir(current_dir) {
-    //         Err(_) => println!("Directory already exists, avoiding step..."),
-    //         Ok(_) => println!("Successfully created configuration dir!"),
-    //     }
-    // }
+    io::create_cargo_config_file(&env::current_dir().unwrap());
     
     // let config_file_path = format!("{dir}/{file}", dir=".cargo", file="config");
     // let path = Path::new(&config_file_path);
