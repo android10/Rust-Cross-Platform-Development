@@ -1,4 +1,4 @@
-static CARGO_CONFIG_DIR_NAME: &str = ".cargo";
+static CARGO_CONFIG_DIR_NAME: &str = "/.cargo";
 static CARGO_CONFIG_FILE_PATH: &str = concat!("config/", ".cargo");
 
 pub mod io {
