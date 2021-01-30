@@ -4,22 +4,20 @@ static CARGO_CONFIG_FILE_NAME: &str = "config";
 pub mod io {
     use std::fs;
     use std::path::PathBuf;
+    use std::fs::File;
 
-    pub fn create_cargo_config_file(dir_path: &PathBuf) -> std::io::Result<()> {
-        let target = dir_path.join(super::CARGO_CONFIG_DIR_NAME);
+    pub fn create_cargo_config_file(dir_path: &PathBuf) -> File {
+        let config_dir = dir_path.join(super::CARGO_CONFIG_DIR_NAME);
+        let config_file = config_dir.join(super::CARGO_CONFIG_FILE_NAME);
 
-        match fs::create_dir(target) {
-            Err(error) => panic!("Error creating cargo configuration directory: {}", error),
-            Ok(current_dir) => {
-                // TODO: create config file and return path
+        match fs::create_dir(&config_dir) {
+            Err(why) => panic!("Could not create cargo configuration directory: {}", why),
+            Ok(_) => {
+                match File::create(&config_file) {
+                    Err(why) => panic!("Could not create cargo configuration file: {}", why),
+                    Ok(file) => file,
+                }
             }
         }
-        Ok(())
-    }
-}
-
-pub mod console {
-    pub fn out(message: &str) {
-        println!("{}", message);
     }
 }

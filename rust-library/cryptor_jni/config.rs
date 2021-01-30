@@ -4,9 +4,6 @@
 use std::env;
 use std::{collections::HashMap};
 use std::io::Result;
-
-use std::fs::File;
-use std::path::Path;
 use std::io::Write;
 
 use serde::Serialize;
@@ -96,22 +93,14 @@ pub fn create_android_targets_config_file() -> Result<()> {
 
     let targets_config = android_targets();
 
-    io::create_cargo_config_file(&env::current_dir().unwrap());
+    let mut config_file = io::create_cargo_config_file(&env::current_dir().unwrap());
     
-    // let config_file_path = format!("{dir}/{file}", dir=".cargo", file="config");
-    // let path = Path::new(&config_file_path);
-    // let display = path.display();
-    // let mut file = match File::create(&path) {
-    //     Err(why) => panic!("Couldn't create {}: {}", display, why),
-    //     Ok(file) => file,
-    // };
+    let toml = toml::to_string(&targets_config).unwrap();
     
-    // let toml = toml::to_string(&targets_config).unwrap();
-    
-    // match file.write_all(toml.as_bytes()) {
-    //     Err(why) => panic!("Couldn't write to {}: {}", display, why),
-    //     Ok(_) => println!("Successfully wrote to {}", display),
-    // };
+    match config_file.write_all(toml.as_bytes()) {
+        Err(why) => panic!("Couldn't write Android Configuration: {}", why),
+        Ok(_) => println!("Successfully wrote Android Configuration"),
+    };
 
     Ok(())
 }
