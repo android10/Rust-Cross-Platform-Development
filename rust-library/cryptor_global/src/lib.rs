@@ -11,13 +11,21 @@ pub mod io {
         let config_file = config_dir.join(super::CARGO_CONFIG_FILE_NAME);
 
         match fs::create_dir(&config_dir) {
-            Err(why) => panic!("Could not create cargo configuration directory: {}", why),
-            Ok(_) => {
-                match File::create(&config_file) {
-                    Err(why) => panic!("Could not create cargo configuration file: {}", why),
-                    Ok(file) => file,
-                }
-            }
+            Err(why) => println!("Couldn't create Cargo Configuration Directory: {}", why),
+            Ok(_) => println!("Successfully created Cargo Configuration Directory."),
+        }
+
+        File::create(&config_file).expect("Could not create cargo configuration file")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    mod io_tests {
+        #[test]
+        fn it_works() {
+            assert_eq!(2 + 2, 4);
         }
     }
 }
