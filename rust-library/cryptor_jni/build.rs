@@ -16,7 +16,6 @@ fn main() {
     config::create_android_targets_config_file();
 
     //TODO: uncommnet println!("cargo:rerun-if-changed=build.rs")
-    //TODO: Refactor and extract global stuff: Global Configuration in Rust?
     //TODO: Write tests
     //TODO: Add toolchains to cargo via command: rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
     //TODO: post release execution: deploy task to copy all the mentioned architectures to the folders. 
