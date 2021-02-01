@@ -1,6 +1,6 @@
 use std::env;
 
-pub fn deploy_artifacts() {
+pub fn deploy_android_artifacts() {
     if is_release() {
         panic!("I'm only panicking in release mode deploying artifacts");
     }

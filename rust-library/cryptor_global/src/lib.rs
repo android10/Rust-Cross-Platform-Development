@@ -24,9 +24,32 @@ pub mod io {
     }
 }
 
+pub mod console {
+    use std::process::Command;
+
+    pub fn run_command(command: &mut Command) {
+        command.output().expect("Failed to execute command");
+    }
+
+    pub fn build_command(comand: &str, args: &[&str]) -> Command {
+        let mut command_with_args = Command::new(comand);
+        
+        for arg in args.iter() {
+            command_with_args.arg(arg);
+        };
+
+        return command_with_args
+    }
+
+    pub fn out(message: &str) {
+        println!("Message: {}", &message);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::io::*;
+    use super::console::*;
 
     #[test]
     fn it_works() {

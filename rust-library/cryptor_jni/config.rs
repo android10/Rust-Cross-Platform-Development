@@ -5,11 +5,13 @@ use std::env;
 use std::{collections::HashMap};
 use std::io::Result;
 use std::io::Write;
+use std::process::Command;
 
 use serde::Serialize;
 use toml;
 
 use cryptor_global::io;
+use cryptor_global::console;
 
 static ANDROID_NDK_ENV_VAR: &str = "ANDROID_NDK_HOME";
 static ANDROID_TOOLCHAINS_DIR: &str = "/toolchains/llvm/prebuilt";
@@ -103,6 +105,11 @@ pub fn create_android_targets_config_file() -> Result<()> {
     };
 
     Ok(())
+}
+
+pub fn add_android_targets_to_toolchain() {
+    let mut command = console::build_command("ls", &["-l"]);
+    console::run_command(&mut command);
 }
 
 #[cfg(test)]
