@@ -35,7 +35,6 @@ pub mod console {
             command_with_args.arg(arg);
         };
 
-
         let output = command_with_args.output().expect("Failed to execute command");
         
         io::stdout().write_all(&output.stdout).unwrap();

@@ -15,6 +15,11 @@ use cryptor_global::console;
 static ANDROID_NDK_ENV_VAR: &str = "ANDROID_NDK_HOME";
 static ANDROID_TOOLCHAINS_DIR: &str = "/toolchains/llvm/prebuilt";
 
+static ANDROID_TARGET_ARMV7: &str = "armv7-linux-androideabi";
+static ANDROID_TARGET_AARCH64: &str = "aarch64-linux-android";
+static ANDROID_TARGET_I686: &str = "i686-linux-android";
+static ANDROID_TARGET_X86_64: &str = "x86_64-linux-android";
+
 struct AndroidConfig;
 impl AndroidConfig {
     fn ndk_dir() -> String {
@@ -59,25 +64,25 @@ fn android_targets<'a>() -> AndroidTargets<'a> {
     let mut android_targets = AndroidTargets { targets: HashMap::with_capacity(4) };
 
     let armv7 = AndroidTargetConfig { 
-        name: "armv7-linux-androideabi",
+        name: ANDROID_TARGET_ARMV7,
         ar: build_archiver("/linux-x86_64/bin/arm-linux-androideabi-ar"),
         linker: build_linker("/linux-x86_64/bin/armv7a-linux-androideabi21-clang"), 
     };
 
     let aarch64 = AndroidTargetConfig { 
-        name: "aarch64-linux-android",
+        name: ANDROID_TARGET_AARCH64,
         ar: build_archiver("/linux-x86_64/bin/aarch64-linux-android-ar"),
         linker: build_linker("/linux-x86_64/bin/aarch64-linux-android21-clang"), 
     };
 
     let i686 = AndroidTargetConfig { 
-        name: "i686-linux-android",
+        name: ANDROID_TARGET_I686,
         ar: build_archiver("/linux-x86_64/bin/i686-linux-android-ar"),
         linker: build_linker("/linux-x86_64/bin/i686-linux-android21-clang"), 
     };
 
     let x86_64 = AndroidTargetConfig { 
-        name: "x86_64-linux-android",
+        name: ANDROID_TARGET_X86_64,
         ar: build_archiver("/linux-x86_64/bin/x86_64-linux-android-ar"),
         linker: build_linker("/linux-x86_64/bin/x86_64-linux-android21-clang"), 
     };
@@ -103,12 +108,16 @@ pub fn create_android_targets_config_file() -> Result<()> {
         Ok(_) => println!("Successfully wrote Android Configuration File."),
     };
 
+    //TODO: Error Handling 
     Ok(())
 }
 
 pub fn add_android_targets_to_toolchain() {
-    // TODO: support windows 
-    console::run_command("ls", &["-l"]);
+    // TODO: Windows Support 
+    console::run_command("rustup", &[ "target", "add", ANDROID_TARGET_ARMV7, 
+                                                       ANDROID_TARGET_AARCH64, 
+                                                       ANDROID_TARGET_I686,
+                                                       ANDROID_TARGET_X86_64]);
 }
 
 #[cfg(test)]
