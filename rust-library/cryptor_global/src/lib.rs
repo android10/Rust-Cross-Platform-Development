@@ -26,15 +26,20 @@ pub mod io {
 
 pub mod console {
     use std::process::Command;
+    use std::io::{self, Write};
 
     pub fn run_command(comand: &str, args: &[&str]) {
         let mut command_with_args = Command::new(comand);
-        
+
         for arg in args.iter() {
             command_with_args.arg(arg);
         };
 
-        command_with_args.output().expect("Failed to execute command");
+
+        let output = command_with_args.output().expect("Failed to execute command");
+        
+        io::stdout().write_all(&output.stdout).unwrap();
+        io::stderr().write_all(&output.stderr).unwrap();
     }
 
     pub fn out(message: &str) {
@@ -50,5 +55,6 @@ mod tests {
     #[test]
     fn it_works() {
         assert_eq!(2 + 2, 4);
+        // assert!(output.status.success());
     }
 }

@@ -100,13 +100,14 @@ pub fn create_android_targets_config_file() -> Result<()> {
     
     match config_file.write_all(toml.as_bytes()) {
         Err(why) => panic!("Couldn't write Android Configuration: {}", why),
-        Ok(_) => println!("Successfully wrote Android Configuration"),
+        Ok(_) => println!("Successfully wrote Android Configuration File."),
     };
 
     Ok(())
 }
 
 pub fn add_android_targets_to_toolchain() {
+    // TODO: support windows 
     console::run_command("ls", &["-l"]);
 }
 
