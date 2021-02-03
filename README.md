@@ -7,3 +7,7 @@ This is still a WIP but the idea is to create a tiny RUST project that could be 
  - Desktop
  - Web
  - Backend
+
+# TODO
+
+ - Windows Support: At the time being building works for Linux and Mac.

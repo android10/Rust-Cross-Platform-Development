@@ -3,7 +3,6 @@
 
 use std::env;
 use std::{collections::HashMap};
-use std::io::Result;
 use std::io::Write;
 
 use serde::Serialize;
@@ -95,7 +94,7 @@ fn android_targets<'a>() -> AndroidTargets<'a> {
     AndroidTargets { targets: android_targets.targets }
 }
 
-pub fn create_android_targets_config_file() -> Result<()> {
+pub fn create_android_targets_config_file() {
 
     let targets_config = android_targets();
 
@@ -107,13 +106,9 @@ pub fn create_android_targets_config_file() -> Result<()> {
         Err(why) => panic!("Couldn't write Android Configuration: {}", why),
         Ok(_) => println!("Successfully wrote Android Configuration File."),
     };
-
-    //TODO: Error Handling 
-    Ok(())
 }
 
 pub fn add_android_targets_to_toolchain() {
-    // TODO: Windows Support 
     console::run_command("rustup", &[ "target", "add", ANDROID_TARGET_ARMV7, 
                                                        ANDROID_TARGET_AARCH64, 
                                                        ANDROID_TARGET_I686,
