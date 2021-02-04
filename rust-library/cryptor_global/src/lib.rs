@@ -51,6 +51,24 @@ pub mod console {
     }
 }
 
+pub mod system {
+    use std::env;
+
+    pub fn is_release() -> bool {
+        Ok("release".to_owned()) == env::var("PROFILE")
+    }
+
+    /// Tell Cargo that if the given file changes, 
+    /// to rerun the build script file passed as a
+    /// parameter.
+    ///
+    /// We communicate with cargo from within 
+    /// the script by writing to stdout.
+    pub fn rerun_if_changed(file_name: &str) {
+        println!("cargo:rerun-if-changed={}", file_name);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::io::*;
