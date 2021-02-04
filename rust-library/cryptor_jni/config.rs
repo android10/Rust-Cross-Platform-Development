@@ -5,6 +5,7 @@ use std::env;
 use std::{collections::HashMap};
 use std::io::Write;
 
+use phf::phf_map;
 use serde::Serialize;
 use toml;
 
@@ -14,10 +15,12 @@ use cryptor_global::console;
 static ANDROID_NDK_ENV_VAR: &str = "ANDROID_NDK_HOME";
 static ANDROID_TOOLCHAINS_DIR: &str = "/toolchains/llvm/prebuilt";
 
-static ANDROID_TARGET_ARMV7: &str = "armv7-linux-androideabi";
-static ANDROID_TARGET_AARCH64: &str = "aarch64-linux-android";
-static ANDROID_TARGET_I686: &str = "i686-linux-android";
-static ANDROID_TARGET_X86_64: &str = "x86_64-linux-android";
+static ANDROID_TARGETS: phf::Map<&'static str, &'static str> = phf_map! {
+    "ARMV7" => "armv7-linux-androideabi",
+    "AARCH64" => "aarch64-linux-android",
+    "I686" => "i686-linux-android",
+    "X86_64" => "x86_64-linux-android",
+};
 
 struct AndroidConfig;
 impl AndroidConfig {
@@ -63,25 +66,25 @@ fn android_targets<'a>() -> AndroidTargets<'a> {
     let mut android_targets = AndroidTargets { targets: HashMap::with_capacity(4) };
 
     let armv7 = AndroidTargetConfig { 
-        name: ANDROID_TARGET_ARMV7,
+        name: ANDROID_TARGETS["ARMV7"],
         ar: build_archiver("/linux-x86_64/bin/arm-linux-androideabi-ar"),
         linker: build_linker("/linux-x86_64/bin/armv7a-linux-androideabi21-clang"), 
     };
 
     let aarch64 = AndroidTargetConfig { 
-        name: ANDROID_TARGET_AARCH64,
+        name: ANDROID_TARGETS["AARCH64"],
         ar: build_archiver("/linux-x86_64/bin/aarch64-linux-android-ar"),
         linker: build_linker("/linux-x86_64/bin/aarch64-linux-android21-clang"), 
     };
 
     let i686 = AndroidTargetConfig { 
-        name: ANDROID_TARGET_I686,
+        name: ANDROID_TARGETS["I686"],
         ar: build_archiver("/linux-x86_64/bin/i686-linux-android-ar"),
         linker: build_linker("/linux-x86_64/bin/i686-linux-android21-clang"), 
     };
 
     let x86_64 = AndroidTargetConfig { 
-        name: ANDROID_TARGET_X86_64,
+        name: ANDROID_TARGETS["X86_64"],
         ar: build_archiver("/linux-x86_64/bin/x86_64-linux-android-ar"),
         linker: build_linker("/linux-x86_64/bin/x86_64-linux-android21-clang"), 
     };
@@ -90,6 +93,9 @@ fn android_targets<'a>() -> AndroidTargets<'a> {
     android_targets.targets.insert(aarch64.name, aarch64);
     android_targets.targets.insert(i686.name, i686);
     android_targets.targets.insert(x86_64.name, x86_64);
+
+    //Being defensive to make sure we do not forget to add any target
+    assert!(android_targets.targets.len() == ANDROID_TARGETS.len());
 
     AndroidTargets { targets: android_targets.targets }
 }
@@ -109,10 +115,9 @@ pub fn create_android_targets_config_file() {
 }
 
 pub fn add_android_targets_to_toolchain() {
-    console::run_command("rustup", &[ "target", "add", ANDROID_TARGET_ARMV7, 
-                                                       ANDROID_TARGET_AARCH64, 
-                                                       ANDROID_TARGET_I686,
-                                                       ANDROID_TARGET_X86_64]);
+    //TODO
+    let command_args = ["target", "add", "armv7-linux-androideabi", "aarch64-linux-android", "i686-linux-android", "x86_64-linux-android"];
+    console::run_command("rustup", &command_args);
 }
 
 #[cfg(test)]
@@ -120,8 +125,8 @@ mod tests {
     use super::config;
 
     #[test]
-    fn test_greet() {
-        assert_eq!("Hello, world!", "Hello, world!");
+    fn test_android_number_of_targets() {
+        assert_eq!(ANDROID_TARGETS.len(), 4);
     }
 }
 

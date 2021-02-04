@@ -1,8 +1,10 @@
 use cryptor_global::system;
+use cryptor_global::console;
 
 pub fn build_android_artifacts() {
     if system::is_release() {
-        //TODO: build every android artifact
+        //TODO
+        // console::run_command(comand: &str, args: &[&str])
     }
 }
 
