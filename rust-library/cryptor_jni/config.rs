@@ -13,14 +13,15 @@ use cryptor_global::io;
 use cryptor_global::console;
 
 static ANDROID_NDK_ENV_VAR: &str = "ANDROID_NDK_HOME";
-static ANDROID_TOOLCHAINS_DIR: &str = "/toolchains/llvm/prebuilt";
+static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/bin/";
 
-static ANDROID_TARGETS: phf::Map<&'static str, &'static str> = phf_map! {
-    "ARMV7" => "armv7-linux-androideabi",
-    "AARCH64" => "aarch64-linux-android",
-    "I686" => "i686-linux-android",
-    "X86_64" => "x86_64-linux-android",
+static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str)> = phf_map! {
+    "armv7-linux-androideabi" => ("arm-linux-androideabi-ar", "armv7a-linux-androideabi21-clang"),
+    "aarch64-linux-android" => ("aarch64-linux-android-ar", "aarch64-linux-android21-clang"),
+    "i686-linux-android" => ("i686-linux-android-ar", "i686-linux-android21-clang"),
+    "x86_64-linux-android" => ("x86_64-linux-android-ar", "x86_64-linux-android21-clang"),
 };
+
 
 struct AndroidConfig;
 impl AndroidConfig {
@@ -29,23 +30,18 @@ impl AndroidConfig {
     }
 
     fn toolchains_dir() -> String {
-        format!("{ndk}{toolchains}", ndk=Self::ndk_dir(), toolchains=ANDROID_TOOLCHAINS_DIR) 
+        format!("{ndk}{toolchains}", ndk=Self::ndk_dir(), toolchains=ANDROID_TOOLCHAINS_PATH) 
     }
 }
 
 #[derive(Serialize)]
 struct AndroidTargets<'a> {
     #[serde(rename(serialize = "target"))]
-    targets: HashMap<&'a str, AndroidTargetConfig<'a>>,
+    targets: HashMap<&'a str, AndroidTargetConfig>,
 }
 
 #[derive(Serialize)]
-struct AndroidTargetConfig<'a> {
-    // Target identifier name to be used by Rust compiler 
-    // to generate the specific artifact.
-    #[serde(skip_serializing)]
-    name: &'a str,
-
+struct AndroidTargetConfig {
     // Archiver to be used to assemble static 
     // libraries compiled from C/C++ code.
     ar: String,
@@ -63,39 +59,12 @@ fn build_linker(linker_path: &str) -> String {
 } 
 
 fn android_targets<'a>() -> AndroidTargets<'a> {
-    let mut android_targets = AndroidTargets { targets: HashMap::with_capacity(4) };
+    let mut android_targets = AndroidTargets { targets: HashMap::with_capacity(ANDROID_TARGETS.len()) };
 
-    let armv7 = AndroidTargetConfig { 
-        name: ANDROID_TARGETS["ARMV7"],
-        ar: build_archiver("/linux-x86_64/bin/arm-linux-androideabi-ar"),
-        linker: build_linker("/linux-x86_64/bin/armv7a-linux-androideabi21-clang"), 
-    };
-
-    let aarch64 = AndroidTargetConfig { 
-        name: ANDROID_TARGETS["AARCH64"],
-        ar: build_archiver("/linux-x86_64/bin/aarch64-linux-android-ar"),
-        linker: build_linker("/linux-x86_64/bin/aarch64-linux-android21-clang"), 
-    };
-
-    let i686 = AndroidTargetConfig { 
-        name: ANDROID_TARGETS["I686"],
-        ar: build_archiver("/linux-x86_64/bin/i686-linux-android-ar"),
-        linker: build_linker("/linux-x86_64/bin/i686-linux-android21-clang"), 
-    };
-
-    let x86_64 = AndroidTargetConfig { 
-        name: ANDROID_TARGETS["X86_64"],
-        ar: build_archiver("/linux-x86_64/bin/x86_64-linux-android-ar"),
-        linker: build_linker("/linux-x86_64/bin/x86_64-linux-android21-clang"), 
-    };
-
-    android_targets.targets.insert(armv7.name, armv7);
-    android_targets.targets.insert(aarch64.name, aarch64);
-    android_targets.targets.insert(i686.name, i686);
-    android_targets.targets.insert(x86_64.name, x86_64);
-
-    //Being defensive to make sure we do not forget to add any target
-    assert!(android_targets.targets.len() == ANDROID_TARGETS.len());
+    for (target, config) in ANDROID_TARGETS.entries() {
+        let target_config = AndroidTargetConfig { ar: build_archiver(config.0), linker: build_linker(config.1) };
+        android_targets.targets.insert(target, target_config);
+    }
 
     AndroidTargets { targets: android_targets.targets }
 }
@@ -129,9 +98,3 @@ mod tests {
         assert_eq!(ANDROID_TARGETS.len(), 4);
     }
 }
-
-
-
-
-
-
