@@ -19,7 +19,7 @@ pub mod android {
     use cryptor::decrypt;
 
     /**
-     * Encrypt a String.
+     * Encrypts a String.
      */
     #[no_mangle]
     pub unsafe extern fn Java_com_fernandocejas_rust_Cryptor_encrypt(
@@ -45,7 +45,7 @@ pub mod android {
     }
     
     /**
-     * Decrypt a String.
+     * Decrypts a String.
      */
     #[no_mangle]
     pub unsafe extern fn Java_com_fernandocejas_rust_Cryptor_decrypt(
@@ -87,14 +87,24 @@ pub mod android {
 #[cfg(test)]
 mod tests {
 
+    use super::*;
+
     #[test]
     fn test_cryptor_encrypt() {
+        
+        let str_encoded_b64 = "aGVsbG9fd29ybGRfZnJvbV9qbmk=";
+        let to_encrypt = "hello_world_from_jni";
+        
         // TODO
         assert_eq!(true, true);
     }
 
     #[test]
     fn test_cryptor_decrypt() {
+
+        let str_decoded_b64 = "hello_world_from_jni";
+        let to_decrypt_b64 = "aGVsbG9fd29ybGRfZnJvbV9qbmk=";
+
         // TODO
         assert_eq!(true, true);
     }

@@ -71,8 +71,8 @@ pub mod system {
 
 #[cfg(test)]
 mod tests {
-    use super::io::*;
-    use super::console::*;
+    // use super::io::*;
+    // use super::console::*;
 
     #[test]
     fn it_works() {

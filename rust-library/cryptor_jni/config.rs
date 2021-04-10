@@ -21,11 +21,8 @@ pub static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str)>
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     #[test]
     fn test_android_number_of_targets() {
-        // TODO: It does not work
-        assert_eq!(super::ANDROID_TARGETS.len(), 8);
+        assert_eq!(super::ANDROID_TARGETS.len(), 4);
     }
 }

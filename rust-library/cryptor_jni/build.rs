@@ -85,8 +85,18 @@ fn add_android_targets_to_toolchain() {
 }
 
 fn main() {
-    system::rerun_if_changed("build.rs");
+    // system::rerun_if_changed("build.rs");
 
     create_android_targets_config_file();
     add_android_targets_to_toolchain();
+}
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn test_test() {
+        // TODO: It does not work
+        assert_eq!(true, false);
+    }
 }

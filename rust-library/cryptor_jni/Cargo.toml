@@ -17,6 +17,7 @@ crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
 cryptor = { path = "../cryptor", version = "0.1.0" }
+phf = { version = "0.8.0", features = ['macros'] }
 
 [build-dependencies]
 phf = { version = "0.8.0", features = ['macros'] }
