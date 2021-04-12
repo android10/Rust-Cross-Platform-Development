@@ -3,6 +3,8 @@ extern crate base64;
 use base64::{encode, decode};
 
 /// Encrypts a String.
+/// 
+/// Example:
 /// ```
 /// use cryptor::encrypt;
 /// assert_eq!(encrypt("hello"), "aGVsbG8=");
@@ -14,6 +16,8 @@ pub fn encrypt(to: &str) -> String {
 }
 
 /// Decrypts a String.
+/// 
+/// Example:
 /// ```
 /// use cryptor::decrypt;
 /// assert_eq!(decrypt("aGVsbG8="), "hello");
