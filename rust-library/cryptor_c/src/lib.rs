@@ -1,9 +1,7 @@
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
 
-/**
- * Encrypt a String.
- */
+/// Encrypts a String.
 #[no_mangle] 
 pub extern "C" fn encrypt(to: *const c_char) -> *mut c_char {
     let to = unsafe { CStr::from_ptr(to).to_str().unwrap() };
@@ -12,9 +10,7 @@ pub extern "C" fn encrypt(to: *const c_char) -> *mut c_char {
     CString::new(result).unwrap().into_raw()
 }
 
-/**
- * Encrypt a String.
- */
+/// Decrypts a String.
 #[no_mangle] 
 pub extern "C" fn decrypt(from: *const c_char) -> *mut c_char {
     let from = unsafe { CStr::from_ptr(from).to_str().unwrap() };

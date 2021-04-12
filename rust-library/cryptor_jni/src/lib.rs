@@ -34,11 +34,13 @@ pub mod android {
 
         let encrypted_str = encrypt(to_encrypt);
 
-        // Retake pointer so that we can use it below and allow 
-        // memory to be freed when it goes out of scope.
-        // let encrypted_str_ptr = CString::new(encrypted_str).unwrap().into_raw();
-        // let encrypted_str_ptr = CString::from_raw(encrypted_str);
-        // let output = get_string(encrypted_str_ptr.to_str().unwrap());
+        /// Retake pointer so that we can use it below and allow 
+        /// memory to be freed when it goes out of scope.
+        /// ```i
+        /// let encrypted_str_ptr = CString::new(encrypted_str).unwrap().into_raw();
+        /// let encrypted_str_ptr = CString::from_raw(encrypted_str);
+        /// let output = get_string(encrypted_str_ptr.to_str().unwrap());
+        /// ```
         let output = env.new_string(&encrypted_str).expect("Couldn't create java string!");
 
         output.into_inner()
@@ -60,11 +62,11 @@ pub mod android {
 
         let decrypted_str = decrypt(to_decrypt);
 
-        // Retake pointer so that we can use it below and allow 
-        // memory to be freed when it goes out of scope.
-        // let encrypted_str_ptr = CString::new(encrypted_str).unwrap().into_raw();
-        // let encrypted_str_ptr = CString::from_raw(encrypted_str);
-        // let output = get_string(encrypted_str_ptr.to_str().unwrap());
+        /// Retake pointer so that we can use it below and allow 
+        /// memory to be freed when it goes out of scope.
+        /// let encrypted_str_ptr = CString::new(encrypted_str).unwrap().into_raw();
+        /// let encrypted_str_ptr = CString::from_raw(encrypted_str);
+        /// let output = get_string(encrypted_str_ptr.to_str().unwrap());
         let output = env.new_string(&decrypted_str).expect("Couldn't create java string!");
 
         output.into_inner()
