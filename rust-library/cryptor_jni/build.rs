@@ -115,18 +115,3 @@ fn main() {
     create_android_targets_config_file();
     add_android_targets_to_toolchain();
 }
-
-#[cfg(test)]
-mod tests {
-
-    #[test]
-    fn test_test() {
-        // TODO: It does not work
-        assert_eq!(true, false);
-    }
-
-    #[test]
-    fn test_android_number_of_targets() {
-        assert_eq!(super::ANDROID_TARGETS.len(), 4);
-    }
-}

@@ -2,18 +2,22 @@ extern crate base64;
 
 use base64::{encode, decode};
 
-/**
- * Encrypt a String.
- */
+/// Encrypts a String.
+/// ```
+/// use cryptor::encrypt;
+/// assert_eq!(encrypt("hello"), "aGVsbG8=");
+/// ```
 pub fn encrypt(to: &str) -> String {
     let b64 = encode(String::from(to));
     
     b64.to_owned()
 }
 
-/**
- * Decrypt a String.
- */
+/// Decrypts a String.
+/// ```
+/// use cryptor::decrypt;
+/// assert_eq!(decrypt("aGVsbG8="), "hello");
+/// ```
 pub fn decrypt(from: &str) -> String {
     let b64_bytes = decode(String::from(from)).unwrap();
     let str_result = String::from_utf8(b64_bytes).unwrap();
