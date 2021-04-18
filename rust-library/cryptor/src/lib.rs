@@ -1,5 +1,3 @@
-extern crate base64;
-
 use base64::{encode, decode};
 
 /// Encrypts a String.
