@@ -7,6 +7,8 @@
 #[cfg(target_os = "android")]
 #[allow(non_snake_case)]
 pub mod android {
+    extern crate jni;
+
     use self::jni::JNIEnv;
     use self::jni::objects::{JClass, JString};
     use self::jni::sys::{jstring};
