@@ -27,9 +27,9 @@ static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/b
 
 /**
  * Due to Rust limitations on generating a static Map with a custom type, a tuple was 
- * needed which the following value representation:
+ * needed with the following value representation:
  *  - Tuple.0 = Archiver to be used to assemble static libraries compiled from C/C++ code. 
- *  - Tuple.1 = Linker to be used to link Rust code. 
+ *  - Tuple.1 = Linker to be used to link Rust code.
  */
 static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str)> = phf_map! {
     "armv7-linux-androideabi" => ("arm-linux-androideabi-ar", "armv7a-linux-androideabi21-clang"),
