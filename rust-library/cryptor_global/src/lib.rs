@@ -111,7 +111,7 @@ mod tests {
     use super::system::*;
 
     #[test]
-    fn given_debug_profile_then_release_returns_false() {
+    fn test_given_debug_profile_then_release_returns_false() {
         assert_eq!(is_release(), false);
     }
 }
