@@ -2,6 +2,8 @@
 //  - https://doc.rust-lang.org/cargo/reference/build-scripts.html
 //  - https://doc.rust-lang.org/cargo/reference/build-script-examples.html
 
+#![allow(dead_code)] // Avoid false positive warning due to calling members from another module
+
 use std::env;
 use std::{collections::HashMap};
 use std::io::Write;
@@ -31,14 +33,13 @@ static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/b
  *  - Tuple.0 = Archiver to be used to assemble static libraries compiled from C/C++ code. 
  *  - Tuple.1 = Linker to be used to link Rust code.
  */
-static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str)> = phf_map! {
+pub static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str)> = phf_map! {
     "armv7-linux-androideabi" => ("arm-linux-androideabi-ar", "armv7a-linux-androideabi21-clang"),
     "aarch64-linux-android" => ("aarch64-linux-android-ar", "aarch64-linux-android21-clang"),
     "i686-linux-android" => ("i686-linux-android-ar", "i686-linux-android21-clang"),
     "x86_64-linux-android" => ("x86_64-linux-android-ar", "x86_64-linux-android21-clang"),
 };
 // -----------------------------------------------------------------------------------------------
-
 
 struct AndroidConfig;
 impl AndroidConfig {
