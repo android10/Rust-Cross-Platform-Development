@@ -7,7 +7,7 @@
 #[cfg(target_os = "android")]
 #[allow(non_snake_case)]
 pub mod android {
-    extern crate jni;
+    extern crate jni;   // https://docs.rs/jni/0.19.0/jni/
 
     use self::jni::JNIEnv;
     use self::jni::objects::{JClass, JString};
@@ -63,31 +63,5 @@ pub mod android {
         env.get_string(java_string)
         .expect("Invalid Pattern String")
         .as_ptr()
-    }
-}
-
-#[cfg(test)]
-mod tests {
-
-    // use super::*;
-
-    #[test]
-    fn test_cryptor_encrypt() {
-        
-        let _str_encoded_b64 = "aGVsbG9fd29ybGRfZnJvbV9qbmk=";
-        let _to_encrypt = "hello_world_from_jni";
-        
-        // TODO
-        assert_eq!(true, true);
-    }
-
-    #[test]
-    fn test_cryptor_decrypt() {
-
-        let _str_decoded_b64 = "hello_world_from_jni";
-        let _to_decrypt_b64 = "aGVsbG9fd29ybGRfZnJvbV9qbmk=";
-
-        // TODO
-        assert_eq!(true, true);
     }
 }

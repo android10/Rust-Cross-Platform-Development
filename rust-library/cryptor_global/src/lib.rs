@@ -108,11 +108,10 @@ pub mod system {
 
 #[cfg(test)]
 mod tests {
-    // use super::io::*;
-    // use super::console::*;
+    use super::system::*;
 
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn given_debug_profile_then_release_returns_false() {
+        assert_eq!(is_release(), false);
     }
 }
