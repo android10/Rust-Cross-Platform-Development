@@ -79,6 +79,17 @@ pub mod console {
     pub fn out(message: &str) {
         println!("Message: {}", &message);
     }
+
+    /// Prints a message to the standard output.
+    /// 
+    /// Example:
+    /// ```
+    /// use cryptor_global::console;
+    /// console::out("hello");
+    /// ```
+    pub fn print(message: String) {
+        println!("Message: {}", &message);
+    }
 }
 
 pub mod system {

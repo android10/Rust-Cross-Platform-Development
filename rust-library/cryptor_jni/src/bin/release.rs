@@ -5,7 +5,7 @@
 use cryptor_global::console;
 
 fn main() {
-    console::out("Releasing Android Targets...");
+    console::out("Releasing Android Targets...Be patient... :)");
     release_android_targets();
 }
 
@@ -18,7 +18,8 @@ fn main() {
 /// ```
 fn release_android_targets() {
     for target in build::ANDROID_TARGETS.keys() {
-        let command_args = build_command_args_for_target(&target);
+        console::print(format!("Building Android Target --> {}", &target));
+        let command_args = build_command_args_for_target(&target.to_owned());
         console::run_command("cargo", &command_args.as_slice());
     }
 }
