@@ -24,7 +24,13 @@ class AndroidApplication : Application() {
     }
 
     private fun loadJNILibraries() {
-        // Load the Crypto Rust Library
+        /**
+         * Loads the Crypto Rust Library.
+         *
+         * IMPORTANT:
+         * The name passed as argument () maps to the
+         * original library name in our Rust project
+         */
         System.loadLibrary("cryptor_jni")
     }
 }
