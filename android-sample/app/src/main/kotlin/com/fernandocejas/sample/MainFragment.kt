@@ -21,6 +21,7 @@ import android.widget.EditText
 import com.fernandocejas.rust.Cryptor
 import com.fernandocejas.sample.core.platform.BaseFragment
 import kotlinx.android.synthetic.main.fragment_main.*
+
 class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private val cryptor = Cryptor()
