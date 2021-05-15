@@ -51,6 +51,9 @@ fn main() {
     // https://github.com/rust-lang/cargo/issues/6100
     // For release then it is easier to change the directory
 
+    //Check 
+    //https://stackoverflow.com/questions/46749360/how-to-get-only-the-directory-portion-of-the-current-executables-path
+
     let target_dir = env::var("PWD").unwrap();
     let file_path = PathBuf::from("../../").into_os_string().into_string().unwrap();
 
