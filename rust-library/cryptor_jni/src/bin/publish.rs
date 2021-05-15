@@ -12,24 +12,24 @@ use phf::phf_map;
  * CPU type and instruction set). According to the official android documentation, we map each
  * target with its corresponding directory (ABI): 
  *
- * -------------------------------------------
- *  ABI               TARGET
- *  ------------------------------------------
- *  armeabi-v7a	 ---> armv7a-linux-androideabi
- *  arm64-v8a    ---> aarch64-linux-android
- *  x86	         ---> i686-linux-android
- *  x86-64       ---> x86_64-linux-android
- * -------------------------------------------
+ * -------------------------------------------------------------------------------------
+ *  ANDROID TARGET                ABI (folder in the android project inside `jniLibs`)
+ *  ------------------------------------------------------------------------------------
+ *  armv7a-linux-androideabi ---> armeabi-v7a	  
+ *  aarch64-linux-android    ---> arm64-v8a    
+ *  i686-linux-android       ---> x86	        
+ *  x86_64-linux-android     ---> x86-64       
+ * -------------------------------------------------------------------------------------
  * 
  * For more information, check the Official Android documentation: 
  *  - https://developer.android.com/ndk/guides/other_build_systems
  *  - https://developer.android.com/ndk/guides/abis
  */
-static ABI_TARGETS: phf::Map<&'static str, &'static str> = phf_map! {
-    "armeabi-v7a" => "armv7a-linux-androideabi",
-    "arm64-v8a" => "aarch64-linux-android",
-    "x86" => "i686-linux-android",
-    "x86-64" => "x86_64-linux-android",
+static TARGETS_ABI: phf::Map<&'static str, &'static str> = phf_map! {
+    "armv7a-linux-androideabi" => "armeabi-v7a",
+    "aarch64-linux-android" => "arm64-v8a",
+    "i686-linux-android" => "x86",
+    "x86_64-linux-android" => "x86-64"
 };
 
 static LIB_CRYPTOR_JNI_FILENAME: &str = "libcryptor_jni.so";
