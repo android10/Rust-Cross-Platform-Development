@@ -4,6 +4,14 @@
 
 use phf::phf_map;
 
+use std::env;
+use std::path::PathBuf;
+use std::fs::File;
+use std::io::Result;
+use std::io::ErrorKind;
+
+use cryptor_global::console;
+
 /**
  * This map is necessary for copying each generated target `libcryptor_jni.so` and `libcryptor.so` to 
  * their specific directory inside the `jniLibs` in the android project.  
@@ -39,4 +47,17 @@ static LIB_CRYPTOR_FILENAME: &str = "libcryptor.so";
 fn main() {
     println!("PUBLISH: {}", &build::ANDROID_TARGETS.len());
     println!("rust-library/target/armv7-linux-androideabi/release/libcryptor_jni.so");
+
+    // https://github.com/rust-lang/cargo/issues/6100
+    // For release then it is easier to change the directory
+
+    let target_dir = env::var("PWD").unwrap();
+    let file_path = PathBuf::from("../../").into_os_string().into_string().unwrap();
+
+    for target in build::ANDROID_TARGETS.keys() {
+
+        console::print(format!("Android Target --> {}", &target));
+        console::print(format!("Release Directory --> {}", &target_dir));
+        // let command_args = build_command_args_for_target(&target.to_owned());
+    }
 }
