@@ -4,7 +4,6 @@ This is still a WIP but the idea is to create a tiny RUST project that could be 
 
  - Android 
  - iOS
- - Desktop
  - Web
  - Backend
 
