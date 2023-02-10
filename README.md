@@ -2,18 +2,18 @@
 
 This is still a WIP but the idea is to create a tiny RUST project that could be used cross-platform:
 
- - Android 
- - iOS
- - Web
- - Backend
+ - Android: Via Android NDK. 
+ - Web: WebAssembly compilation.
+ - Desktop: Rust CLI.
 
 # TODO
 
- - [ ] Windows Support: At the time being building works for Linux and Mac.
+ - [ ] PR Accepted: iOS Application.
+ - [ ] PR Accepted: Rust Backend Application.
 
 ## License
 
-    Copyright 2021 Fernando Cejas
+    Copyright 2023 Fernando Cejas
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
