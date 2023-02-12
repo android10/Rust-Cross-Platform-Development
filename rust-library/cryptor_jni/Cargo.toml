@@ -9,21 +9,21 @@ build = "build.rs"
 # https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [target.'cfg(target_os="android")'.dependencies]
-jni = { version = "0.19", default-features = false }
+jni = { version = "0.20.0", default-features = false }
 
 # Dynamic Library: https://doc.rust-lang.org/reference/linkage.html
 [lib]
 crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
-phf = { version = "0.8.0", features = ['macros'] }
+phf = { version = "0.11.1", features = ['macros'] }
 serde = { version = '1.0.118', features = ['derive'] }
-toml = "0.5"
+toml = "0.7.2"
 cryptor = { path = "../cryptor", version = "0.1.0" }
 cryptor_global = { path = "../cryptor_global", version = "0.1.0" }
 
 [build-dependencies]
-phf = { version = "0.8.0", features = ['macros'] }
+phf = { version = "0.11.1", features = ['macros'] }
 serde = { version = '1.0.118', features = ['derive'] }
-toml = "0.5"
+toml = "0.7.2"
 cryptor_global = { path = "../cryptor_global", version = "0.1.0" }
