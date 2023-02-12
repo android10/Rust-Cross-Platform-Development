@@ -2,10 +2,10 @@ package com.fernandocejas.rust
 
 /**
  * Helper that acts as an interface between native
- * code (in this case Rust) and Kotlin.
+ * code (in this case Rust via JNI) and Kotlin.
  *
  * By convention the function signatures should respect
- * the original ones from our Rust Project.
+ * the original ones from the C++ (Rust via JNI) Project.
  */
 class Cryptor {
 
