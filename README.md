@@ -3,7 +3,7 @@
 This is still a WIP but the idea is to create a tiny RUST project that could be used cross-platform:
 
  - **ANDROID:** Via Android NDK.
- - **WEB:** via WebAssembly.
+ - **WEB:** Via WebAssembly.
  - **CLI:** Pure Rust Command Line Application.
 
 # TODO
