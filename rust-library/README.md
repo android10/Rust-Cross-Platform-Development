@@ -7,6 +7,10 @@
  - `cargo build`
  - `cargo test`
 
+### Bumping dependencies
+
+ - `cargo update`
+
 ## Rust Useful References
 
  - [Transition a project to a new Rust Edition](https://doc.rust-lang.org/edition-guide/editions/transitioning-an-existing-project-to-a-new-edition.html)
