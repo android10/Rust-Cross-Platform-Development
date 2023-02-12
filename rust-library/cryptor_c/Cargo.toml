@@ -1,8 +1,8 @@
 [package]
 name = "cryptor_c"
 version = "0.1.0"
-authors = ["Fernando Cejas <fcejas@gmail.com>"]
-edition = "2018"
+authors = ["Fernando Cejas <android10@fernandocejas.com>"]
+edition = "2021"
 
 # See more keys and their definitions at 
 # https://doc.rust-lang.org/cargo/reference/manifest.html

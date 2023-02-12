@@ -1,8 +1,8 @@
 [package]
 name = "cryptor_global"
 version = "0.1.0"
-authors = ["Fernando Cejas <fcejas@gmail.com>"]
-edition = "2018"
+authors = ["Fernando Cejas <android10@fernandocejas.com>"]
+edition = "2021"
 
 [lib]
 crate-type = ["rlib"]
