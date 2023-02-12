@@ -2,14 +2,15 @@
 
 This is still a WIP but the idea is to create a tiny RUST project that could be used cross-platform:
 
- - Android: Via Android NDK. 
- - Web: WebAssembly compilation.
- - Desktop: Rust CLI.
+ - **ANDROID:** Via Android NDK.
+ - **WEB:** via WebAssembly.
+ - **CLI:** Pure Rust Command Line Application.
 
 # TODO
 
  - [ ] PR Accepted: iOS Application.
- - [ ] PR Accepted: Rust Backend Application.
+ - [ ] PR Accepted: Rust Desktop Application.
+ - [ ] PR Accepted: Rust Backend.
 
 ## License
 
