@@ -15,8 +15,40 @@
  */
 package com.fernandocejas.sample
 
-import com.fernandocejas.sample.core.platform.BaseActivity
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.commit
+import com.fernandocejas.sample.databinding.ActivityLayoutBinding
 
-class MainActivity : BaseActivity() {
-    override fun fragment() =  MainFragment()
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLayoutBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityLayoutBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
+        setupToolbar()
+        addFragment(savedInstanceState)
+    }
+
+    private fun setupToolbar() {
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        toolbar.title = getString(R.string.app_name)
+        setSupportActionBar(toolbar)
+    }
+
+    private fun addFragment(savedInstanceState: Bundle?) {
+        if (firstTimeCreated(savedInstanceState)) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.fragment_container_view, MainFragment())
+            }
+        }
+    }
+
+    private fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 }

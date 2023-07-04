@@ -1,22 +1,11 @@
 plugins {
-  id(ScriptPlugins.infrastructure)
-}
-
-buildscript {
-  repositories {
-    google()
-    jcenter()
-  }
-
-  dependencies {
-    classpath (BuildPlugins.androidGradlePlugin)
-    classpath (BuildPlugins.kotlinGradlePlugin)
-  }
-}
-
-allprojects {
-  repositories {
-    google()
-    jcenter()
-  }
+  /**
+   * Use `apply false` in the top-level build.gradle file to add a Gradle
+   * plugin as a build dependency but not apply it to the current (root)
+   * project. Don't use `apply false` in sub-projects. For more information,
+   * see Applying external plugins with same version to subprojects.
+   */
+  id("com.android.application") version "8.0.2" apply false
+  id("com.android.library") version "8.0.2" apply false
+  id("org.jetbrains.kotlin.android") version "1.8.20" apply false
 }

@@ -31,7 +31,6 @@ class AndroidApplication : Application() {
          * The name passed as argument () maps to the
          * original library name in our Rust project
          */
-//        System.loadLibrary("cryptor_jni")
-        System.loadLibrary("libcryptor_jni")
+        System.loadLibrary("cryptor_jni")
     }
 }
