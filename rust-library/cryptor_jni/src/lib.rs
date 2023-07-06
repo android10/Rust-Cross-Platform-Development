@@ -7,61 +7,78 @@
 #[cfg(target_os = "android")]
 #[allow(non_snake_case)]
 pub mod android {
-    extern crate jni;   // https://docs.rs/jni/0.19.0/jni/
 
+    extern crate jni;
+    
+    // This is the interface to the JVM 
+    // that we'll call the majority of our
+    // methods on.
+    // @See https://docs.rs/jni/latest/jni/
     use self::jni::JNIEnv;
+
+    // These objects are what you should use as arguments to your 
+    // native function. They carry extra lifetime information to 
+    // prevent them escaping this context and getting used after 
+    // being GC'd.
     use self::jni::objects::{JClass, JString};
-    use self::jni::sys::{jstring};
-    use std::ffi::{CStr};
-    use std::os::raw::c_char;
+    
+    // This is just a pointer. We'll be returning it from our function. 
+    // We can't return one of the objects with lifetime information 
+    // because the lifetime checker won't let us.
+    use self::jni::sys::jstring;
     
     use cryptor::encrypt;
     use cryptor::decrypt;
 
     /// Encrypts a String.
-    #[no_mangle]
-    pub unsafe extern fn Java_com_fernandocejas_rust_Cryptor_encrypt(
-        env: JNIEnv,
-        _: JClass,
-        java_string: JString,
+    #[no_mangle] // This keeps Rust from "mangling" the name so it is unique (crate).
+    pub extern "system" fn Java_com_fernandocejas_rust_Cryptor_encrypt<'local>(
+        mut env: JNIEnv<'local>,
+        // This is the class that owns our static method. It's not going to be used,
+        // but still must be present to match the expected signature of a static
+        // native method.
+        _class: JClass<'local>,
+        input: JString<'local>,
     ) -> jstring {
 
-        // Let's call the Rust Library for encryption
-        let to = get_string(&env, java_string);
-        let to_encrypt = CStr::from_ptr(to).to_str().unwrap();
+        // First, we have to get the string out of Java. Check out the `strings`
+        // module for more info on how this works.
+        let to_encrypt: String = env.get_string(&input).expect("Couldn't get java string!").into();
 
-        let encrypted_str = encrypt(to_encrypt);
+        // We encrypt our str calling the cryptor library
+        let encrypted_str = encrypt(&to_encrypt);
+        
+        // Here we have to create a new Java string to return. Again, more info
+        // in the `strings` module.
         let output = env.new_string(&encrypted_str).expect("Couldn't create Java String!");
 
-        output.into_inner()
+        // Finally, extract the raw pointer to return.
+        output.into_raw()
     }
     
     /// Decrypts a String.
-    #[no_mangle]
-    pub unsafe extern fn Java_com_fernandocejas_rust_Cryptor_decrypt(
-        env: JNIEnv, 
-        _: JClass, 
-        java_string: JString
+    #[no_mangle] // This keeps Rust from "mangling" the name so it is unique (crate).
+    pub extern "system" fn Java_com_fernandocejas_rust_Cryptor_decrypt<'local>(
+        mut env: JNIEnv<'local>,
+        // This is the class that owns our static method. It's not going to be used,
+        // but still must be present to match the expected signature of a static
+        // native method.        
+        _class: JClass<'local>,
+        input: JString<'local>,
     ) -> jstring {
 
-        // Let's call the Rust Library for decryption
-        let to = get_string(&env, java_string);
-        let to_decrypt = CStr::from_ptr(to).to_str().unwrap();
+        // First, we have to get the string out of Java. Check out the `strings`
+        // module for more info on how this works.
+        let to_decrypt: String = env.get_string(&input).expect("Couldn't get java string!").into();
 
-        let decrypted_str = decrypt(to_decrypt);
+        // We decrypt our str calling the cryptor library
+        let decrypted_str = decrypt(&to_decrypt.to_owned());
+
+        // Here we have to create a new Java string to return. Again, more info
+        // in the `strings` module.
         let output = env.new_string(&decrypted_str).expect("Couldn't create Java String!");
 
-        output.into_inner()
-    }
-
-    /// Get and check a valid Java String
-    fn get_string(
-        env: &JNIEnv, 
-        java_string: JString
-    ) -> *const c_char {
-
-        env.get_string(java_string)
-        .expect("Invalid Pattern String")
-        .as_ptr()
+        // Finally, extract the raw pointer to return.
+        output.into_raw()
     }
 }

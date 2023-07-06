@@ -12,8 +12,9 @@ fn main() {
 /// Release android targets from Configuration.
 /// Check out ['build.rs'] File.
 /// 
-/// Example of executed command:
+/// Examples of executed command:
 /// ```
+/// cargo build --target aarch64-linux-android --release
 /// cargo build --target armv7-linux-androideabi --release
 /// ```
 fn release_android_targets() {

@@ -23,8 +23,11 @@ use cryptor_global::system;
 // -----------------------------------------------------------------------------------------------
 // @See Cargo Config
 //  - https://doc.rust-lang.org/cargo/reference/config.html
+//
+// @See Andrid NDK Configuration
+//  - https://developer.android.com/studio/projects/install-ndk#specific-version
 // -----------------------------------------------------------------------------------------------
-static ANDROID_NDK_ENV_VAR: &str = "ANDROID_NDK_HOME";
+static ANDROID_NDK_VERSION: &str = "25.2.9519653";
 static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/bin/";
 
 /**
@@ -44,11 +47,17 @@ pub static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str)>
 struct AndroidConfig;
 impl AndroidConfig {
     fn ndk_dir() -> String {
-        env::var(ANDROID_NDK_ENV_VAR).unwrap()
+        format!(
+            "{android_sdk_dir}/ndk/{android_ndk_version}",
+            android_sdk_dir = env::var("ANDROID_HOME").unwrap(), 
+            android_ndk_version = ANDROID_NDK_VERSION
+        )
+        //TODO: make this to work
+        // "/home/fernando/Android/Sdk/ndk/25.2.9519653".to_owned()
     }
 
     fn toolchains_dir() -> String {
-        format!("{ndk}{toolchains}", ndk=Self::ndk_dir(), toolchains=ANDROID_TOOLCHAINS_PATH) 
+        format!("{ndk}{toolchains}", ndk = Self::ndk_dir(), toolchains = ANDROID_TOOLCHAINS_PATH) 
     }
 }
 

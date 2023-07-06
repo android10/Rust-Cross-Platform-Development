@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------------------------------------
 # A N D R O I D    -    C O N F I G U R A T I O N
 # -----------------------------------------------------------------------------------------------------------
-# - ndk.environment_variable -> env var name pointing to your local android NDK. 
+# - ndk.version -> @See https://developer.android.com/studio/projects/install-ndk#specific-version 
 # - ndk.toolchains_path -> toolchains path for cross compilation in order to target processor architectures. 
 # -----------------------------------------------------------------------------------------------------------
 # - [targets.name] -> Name of the processor architecture to target. 
@@ -10,7 +10,7 @@
 # -----------------------------------------------------------------------------------------------------------
 
 [ndk]
-environment_variable = "ANDROID_NDK_HOME"
+version = "25.2.9519653"
 toolchains_path = "/toolchains/llvm/prebuilt/linux-x86_64/bin/"
 
 [targets]
