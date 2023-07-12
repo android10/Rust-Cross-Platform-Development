@@ -16,39 +16,26 @@
 package com.fernandocejas.sample
 
 import android.os.Bundle
-import android.view.View
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.commit
-import com.fernandocejas.sample.databinding.ActivityLayoutBinding
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityLayoutBinding.inflate(layoutInflater)
-
-        setContentView(binding.root)
-        setupToolbar()
-        addFragment(savedInstanceState)
-    }
-
-    private fun setupToolbar() {
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        toolbar.title = getString(R.string.app_name)
-        setSupportActionBar(toolbar)
-    }
-
-    private fun addFragment(savedInstanceState: Bundle?) {
-        if (firstTimeCreated(savedInstanceState)) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add(R.id.fragment_container_view, MainFragment())
-            }
+        setContent {
+            BasicText(text = "This is a title")
+            SimpleText(text = "Hello World!!!")
         }
     }
 
-    private fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
+    @Preview
+    @Composable
+    fun SimpleText(text: String = "Hello") {
+        BasicText(text = text)
+    }
 }

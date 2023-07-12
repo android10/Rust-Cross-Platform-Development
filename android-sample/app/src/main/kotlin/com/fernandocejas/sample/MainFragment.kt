@@ -15,96 +15,87 @@
  */
 package com.fernandocejas.sample
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.fernandocejas.rust.Cryptor
-import com.fernandocejas.sample.core.extension.inputManager
-import com.fernandocejas.sample.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
-
-    private var _binding: FragmentMainBinding? = null
-    private val binding get() = _binding!!
-
-    private val actionBar = activity?.actionBar
-
-    private val cryptor = Cryptor()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initializeUI()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun initializeUI() {
-        binding.btnEncrypt.setOnClickListener { onButtonEncryptClicked() }
-        binding.btnDecrypt.setOnClickListener { onButtonDecryptClicked() }
-    }
-
-
-    private fun onButtonEncryptClicked() {
-        validateInput(binding.editEncrypt) {
-            hideKeyboard(binding.editEncrypt)
-            val encryptedText = cryptor.encrypt(binding.editEncrypt.text.toString())
-            val successMsg = getString(R.string.txt_encrypted).plus(": ").plus(encryptedText)
-            printResult(binding.editDecrypt, encryptedText)
-            notifySuccess(successMsg)
-        }
-    }
-
-    private fun onButtonDecryptClicked() {
-        validateInput(binding.editDecrypt) {
-            hideKeyboard(binding.editDecrypt)
-            val decryptedText = cryptor.decrypt(binding.editDecrypt.text.toString())
-            val successMsg = getString(R.string.txt_decrypted).plus(": ").plus(decryptedText)
-            printResult(binding.editEncrypt, decryptedText)
-            notifySuccess(successMsg)
-        }
-    }
-
-    private fun validateInput(textEditText: EditText, fnSuccess: () -> Unit) {
-        if (textEditText.text.isEmpty()) {
-            textEditText.requestFocus()
-            textEditText.error = getString(R.string.error_empty_input)
-        } else {
-            fnSuccess.invoke()
-        }
-    }
-
-    private fun printResult(textEditText: EditText, result: String) {
-        textEditText.text.clear()
-        textEditText.text.append(result)
-    }
-
-
-    private fun notifySuccess(message: String) {
-        binding.editResult.text.clear()
-        binding.editResult.text.append(message)
-        toast(message)
-    }
-
-    private fun hideKeyboard(view: View) =
-        view.let { context?.inputManager?.hideSoftInputFromWindow(it.windowToken, 0) }
-
-    private fun toast(message: String) =
-        Toast.makeText(activity, message.trim(), Toast.LENGTH_SHORT).show()
+//
+//    private var _binding: FragmentMainBinding? = null
+//    private val binding get() = _binding!!
+//
+//    private val actionBar = activity?.actionBar
+//
+//    private val cryptor = Cryptor()
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        _binding = FragmentMainBinding.inflate(inflater, container, false)
+//        return binding.root
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        initializeUI()
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
+//
+//    private fun initializeUI() {
+//        binding.btnEncrypt.setOnClickListener { onButtonEncryptClicked() }
+//        binding.btnDecrypt.setOnClickListener { onButtonDecryptClicked() }
+//    }
+//
+//
+//    private fun onButtonEncryptClicked() {
+//        validateInput(binding.editEncrypt) {
+//            hideKeyboard(binding.editEncrypt)
+//            val encryptedText = cryptor.encrypt(binding.editEncrypt.text.toString())
+//            val successMsg = getString(R.string.txt_encrypted).plus(": ").plus(encryptedText)
+//            printResult(binding.editDecrypt, encryptedText)
+//            notifySuccess(successMsg)
+//        }
+//    }
+//
+//    private fun onButtonDecryptClicked() {
+//        validateInput(binding.editDecrypt) {
+//            hideKeyboard(binding.editDecrypt)
+//            val decryptedText = cryptor.decrypt(binding.editDecrypt.text.toString())
+//            val successMsg = getString(R.string.txt_decrypted).plus(": ").plus(decryptedText)
+//            printResult(binding.editEncrypt, decryptedText)
+//            notifySuccess(successMsg)
+//        }
+//    }
+//
+//    private fun validateInput(textEditText: EditText, fnSuccess: () -> Unit) {
+//        if (textEditText.text.isEmpty()) {
+//            textEditText.requestFocus()
+//            textEditText.error = getString(R.string.error_empty_input)
+//        } else {
+//            fnSuccess.invoke()
+//        }
+//    }
+//
+//    private fun printResult(textEditText: EditText, result: String) {
+//        textEditText.text.clear()
+//        textEditText.text.append(result)
+//    }
+//
+//
+//    private fun notifySuccess(message: String) {
+//        binding.editResult.text.clear()
+//        binding.editResult.text.append(message)
+//        toast(message)
+//    }
+//
+//    private fun hideKeyboard(view: View) =
+//        view.let { context?.inputManager?.hideSoftInputFromWindow(it.windowToken, 0) }
+//
+//    private fun toast(message: String) =
+//        Toast.makeText(activity, message.trim(), Toast.LENGTH_SHORT).show()
 }
 

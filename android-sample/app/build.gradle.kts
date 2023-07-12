@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
   id("com.android.application")
   id("org.jetbrains.kotlin.android")
@@ -5,10 +7,11 @@ plugins {
 
 android {
   namespace = "com.fernandocejas.sample"
-
   compileSdk = 33
+
   defaultConfig {
     applicationId = "com.fernandocejas.sample"
+
     minSdk = 29
     targetSdk = 33
     versionCode = 1
@@ -16,12 +19,10 @@ android {
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-    // See: 'variants.gradle.kts' if you want to configure the ndk block
-    // for each product flavor in your build configuration.
     ndk {
       // Specifies the ABI configurations of your native
       // libraries Gradle should build and package with your APK.
-      // Here is a list of supported abis:
+      // Here is a list of supported ABIs:
       // https://developer.android.com/ndk/guides/abis
       abiFilters.addAll(
         setOf(
@@ -44,7 +45,13 @@ android {
   }
 
   buildFeatures {
-    viewBinding = true
+    // https://developer.android.com/jetpack/compose/setup
+    compose = true
+  }
+
+  composeOptions {
+    // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+    kotlinCompilerExtensionVersion = "1.4.8"
   }
 
   buildTypes {
@@ -63,6 +70,28 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
   implementation("androidx.core:core-ktx:1.10.1")
   implementation("androidx.appcompat:appcompat:1.6.1")
+
+  // Jetpack Compose
+  //  https://developer.android.com/jetpack/compose/setup#kotlin_1
+  val composeBom = platform("androidx.compose:compose-bom:2023.05.01")
+  implementation(composeBom)
+  androidTestImplementation(composeBom)
+
+  // Material Design 3
+  implementation("androidx.compose.material3:material3")
+
+  // Compose Activity Integration
+  implementation("androidx.activity:activity-compose:1.7.2")
+
+  // Android Studio Preview support
+  implementation("androidx.compose.ui:ui-tooling-preview")
+  debugImplementation("androidx.compose.ui:ui-tooling")
+
+  // UI Tests
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+  debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+
   implementation("androidx.fragment:fragment-ktx:1.6.0")
   implementation("com.google.android.material:material:1.9.0")
   implementation("androidx.constraintlayout:constraintlayout:2.1.4")
