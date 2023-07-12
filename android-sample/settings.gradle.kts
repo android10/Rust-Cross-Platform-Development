@@ -1,5 +1,6 @@
-pluginManagement {
+@file:Suppress("UnstableApiUsage")
 
+pluginManagement {
     /**
      * The pluginManagement {repositories {...}} block configures the
      * repositories Gradle uses to search or download the Gradle plugins and
@@ -17,8 +18,8 @@ pluginManagement {
         mavenCentral()
     }
 }
-dependencyResolutionManagement {
 
+dependencyResolutionManagement {
     /**
      * The dependencyResolutionManagement {repositories {...}}
      * block is where you configure the repositories and dependencies used by
@@ -29,12 +30,13 @@ dependencyResolutionManagement {
      * Repository by default, but it does not configure any dependencies (unless
      * you select a template that requires some).
      */
-
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
     repositories {
         google()
         mavenCentral()
     }
 }
+
 rootProject.name = "Rust Android Sample"
 include(":app")

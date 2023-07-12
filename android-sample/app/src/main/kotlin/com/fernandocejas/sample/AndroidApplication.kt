@@ -18,6 +18,7 @@ package com.fernandocejas.sample
 import android.app.Application
 
 class AndroidApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
         loadJNILibraries()
@@ -29,7 +30,7 @@ class AndroidApplication : Application() {
          *
          * IMPORTANT:
          * The name passed as argument () maps to the
-         * original library name in our Rust project
+         * original library name in our Rust project.
          */
         System.loadLibrary("cryptor_jni")
     }
