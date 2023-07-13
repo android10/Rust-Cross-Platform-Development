@@ -18,9 +18,21 @@ package com.fernandocejas.sample
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,12 +42,38 @@ class MainActivity : AppCompatActivity() {
         setContent {
             BasicText(text = "This is a title")
             SimpleText(text = "Hello World!!!")
+            ButtonClickComponent()
         }
     }
 
     @Preview
     @Composable
     fun SimpleText(text: String = "Hello") {
-        BasicText(text = text)
+        BasicText(
+            text = text,
+            modifier = Modifier
+                .padding(16.dp)
+                .background(Color.LightGray)
+        )
+    }
+
+    @Preview
+    @Composable
+    fun ButtonClickComponent() {
+        var showPopup by remember {
+            mutableStateOf(false)
+        }
+        val color = if (showPopup) {
+            Color.Green
+        } else {
+            Color.Red
+        }
+        val colors = ButtonDefaults.buttonColors(containerColor = color)
+        Button(
+            onClick = { showPopup = showPopup.not() },
+            colors = colors
+        ) {
+            Text(text = "Click Me")
+        }
     }
 }
