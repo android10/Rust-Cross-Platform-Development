@@ -15,9 +15,7 @@
  */
 package com.fernandocejas.sample
 
-import androidx.fragment.app.Fragment
-
-class MainFragment : Fragment() {
+class MainFragment {
 //
 //    private var _binding: FragmentMainBinding? = null
 //    private val binding get() = _binding!!

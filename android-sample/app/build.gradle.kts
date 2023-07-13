@@ -1,19 +1,31 @@
 @file:Suppress("UnstableApiUsage")
 
+class AppConfig {
+  val id = "com.fernandocejas.sample"
+  val javaVersion = JavaVersion.VERSION_17
+
+  val compileSdk = libs.versions.compileSdk.get().toInt()
+  val minSdk = libs.versions.minSdk.get().toInt()
+  val targetSdk = libs.versions.targetSdk.get().toInt()
+}
+
+
 plugins {
-  id("com.android.application")
-  id("org.jetbrains.kotlin.android")
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.android)
 }
 
 android {
-  namespace = "com.fernandocejas.sample"
-  compileSdk = 33
+  val appConfig = AppConfig()
+
+  namespace = appConfig.id
+  compileSdk = appConfig.compileSdk
 
   defaultConfig {
-    applicationId = "com.fernandocejas.sample"
+    applicationId = appConfig.id
 
-    minSdk = 29
-    targetSdk = 33
+    minSdk = appConfig.minSdk
+    targetSdk = appConfig.targetSdk
     versionCode = 1
     versionName = "1.0"
 
@@ -36,12 +48,12 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = appConfig.javaVersion
+    targetCompatibility = appConfig.javaVersion
   }
 
   kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_17.toString()
+    jvmTarget = appConfig.javaVersion.toString()
   }
 
   buildFeatures {
@@ -59,42 +71,32 @@ android {
       isMinifyEnabled = false
     }
     getByName("release") {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
     }
   }
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
-  implementation("androidx.core:core-ktx:1.10.1")
-  implementation("androidx.appcompat:appcompat:1.6.1")
+  implementation(libs.kotlin.stdlib.jdk8)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.coroutines.android)
+  implementation(libs.android.core.ktx)
+  implementation(libs.android.appcompat)
 
   // Jetpack Compose
   //  https://developer.android.com/jetpack/compose/setup#kotlin_1
-  val composeBom = platform("androidx.compose:compose-bom:2023.05.01")
+  val composeBom = platform(libs.androidx.compose.bom)
   implementation(composeBom)
   androidTestImplementation(composeBom)
 
   // Material Design 3
-  implementation("androidx.compose.material3:material3:1.1.1")
-  implementation("androidx.compose.material3:material3-window-size-class:1.1.1")
-
+  implementation(libs.androidx.compose.material3)
+  implementation(libs.androidx.compose.material3.window.size)
 
   // Compose Activity Integration
-  implementation("androidx.activity:activity-compose:1.7.2")
+  implementation(libs.androidx.activty.compose)
 
   // Android Studio Preview support
-  implementation("androidx.compose.ui:ui-tooling-preview")
-  debugImplementation("androidx.compose.ui:ui-tooling")
-
-  // UI Tests
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-  debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-
-  implementation("androidx.fragment:fragment-ktx:1.6.0")
-  implementation("com.google.android.material:material:1.9.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+  implementation(libs.androidx.compose.ui.tooling.preview)
+  implementation(libs.androidx.compose.ui.tooling)
 }
