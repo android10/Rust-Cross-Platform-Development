@@ -11,6 +11,7 @@ This is still a WIP but the idea is to create a tiny RUST project that could be 
  - [ ] PR Accepted: iOS Application.
  - [ ] PR Accepted: Rust Desktop Application.
  - [ ] PR Accepted: Rust Backend.
+ - [ ] PR Accepted: Web App using WASM.
 
 ## License
 
