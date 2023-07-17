@@ -89,6 +89,9 @@ dependencies {
   implementation(composeBom)
   androidTestImplementation(composeBom)
 
+  // Livedata
+  implementation(libs.androidx.compose.runtime.livedata)
+
   // Material Design 3
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.material3.window.size)

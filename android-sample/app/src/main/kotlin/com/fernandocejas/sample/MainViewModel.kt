@@ -1,5 +1,7 @@
 package com.fernandocejas.sample
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 /**
@@ -7,14 +9,13 @@ import androidx.lifecycle.ViewModel
  */
 class MainViewModel : ViewModel() {
 
-//    private val _drawerShouldBeOpened = MutableStateFlow(false)
-//    val drawerShouldBeOpened = _drawerShouldBeOpened.asStateFlow()
+    private val cryptor = Cryptor()
 
-    fun openDrawer() {
-//        _drawerShouldBeOpened.value = true
-    }
+    private val _encryptedString = MutableLiveData<String>()
+    val encryptedString: LiveData<String> = _encryptedString
 
-    fun resetOpenDrawerAction() {
-//        _drawerShouldBeOpened.value = false
+    fun encryptString(strToEncrypt: String) {
+//        _encryptedString.value = cryptor.encrypt(strToEncrypt)
+        _encryptedString.value = strToEncrypt
     }
 }
