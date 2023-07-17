@@ -3,6 +3,7 @@ package com.fernandocejas.sample
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.fernandocejas.rust.Cryptor
 
 /**
  * Used to communicate between screens.
@@ -10,8 +11,9 @@ import androidx.lifecycle.ViewModel
 class MainViewModel : ViewModel() {
 
     /**
-     * Just for Learning purpose but
-     * this collaborator should be passed as
+     * TODO: Just for Learning Purpose.
+     *
+     * This collaborator should be passed as
      * a constructor argument of the
      * [ViewModel].
      *
@@ -32,6 +34,15 @@ class MainViewModel : ViewModel() {
     }
 
     val decryptString: (String) -> Unit = {
-        _decryptedStringResult.value = cryptor.decrypt(it)
+        /**
+         * TODO: Just for Learning Purpose.
+         *
+         * Proper handle exceptions and failure.
+         */
+        val decryptionResult = cryptor.decrypt(it)
+        when {
+            decryptionResult.isNotBlank() -> _decryptedStringResult.value = decryptionResult
+            else -> _decryptedStringResult.value = "Invalid Base64 String!!!"
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.fernandocejas.sample
+package com.fernandocejas.rust
 
 /**
  * Helper that acts as an interface between native
