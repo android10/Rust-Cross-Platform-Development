@@ -17,15 +17,13 @@ class MainViewModel : ViewModel() {
 
     // Decryption
     private val _decryptedStringResult = MutableLiveData<String>()
-    val decryptedStringResult: LiveData<String> = _encryptedStringResult
+    val decryptedStringResult: LiveData<String> = _decryptedStringResult
 
-    fun encryptString(strToEncrypt: String) {
-//        _encryptedString.value = cryptor.encrypt(strToEncrypt)
-        _encryptedStringResult.value = strToEncrypt
+    val encryptString: (String) -> Unit = {
+        _encryptedStringResult.value = it
     }
 
-    fun decryptString(strToDecrypt: String) {
-//        _encryptedString.value = cryptor.encrypt(strToEncrypt)
-        _decryptedStringResult.value = strToDecrypt
+    val decryptString: (String) -> Unit = {
+        _decryptedStringResult.value = it
     }
 }

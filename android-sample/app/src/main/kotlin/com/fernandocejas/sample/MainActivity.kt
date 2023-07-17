@@ -35,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +44,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 
@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @Preview
     @Composable
     fun MainScreenComponent() {
         TopBarComponent()
@@ -85,13 +84,17 @@ class MainActivity : AppCompatActivity() {
             verticalArrangement = Arrangement.Top,
         ) {
             EncryptDecryptComponent(
+                observableState = viewModel.encryptedStringResult.observeAsState(initial = ""),
+                textFieldLabel = stringResource(id = R.string.txt_encrypt_label_hint),
                 buttonText = stringResource(id = R.string.txt_encrypt),
-                textFieldLabel = stringResource(id = R.string.txt_encrypt_label_hint)
+                buttonClickFn = viewModel.encryptString,
             )
             Spacer(modifier = Modifier.height(height = 50.dp))
             EncryptDecryptComponent(
+                observableState = viewModel.decryptedStringResult.observeAsState(initial = ""),
+                textFieldLabel = stringResource(id = R.string.txt_decrypt_label_hint),
                 buttonText = stringResource(id = R.string.txt_decrypt),
-                textFieldLabel = stringResource(id = R.string.txt_decrypt_label_hint)
+                buttonClickFn = viewModel.decryptString,
             )
         }
     }
@@ -113,36 +116,26 @@ class MainActivity : AppCompatActivity() {
 
     @Composable
     fun EncryptDecryptComponent(
-        buttonText: String = stringResource(id = R.string.txt_encrypt),
-        textFieldLabel: String = stringResource(id = R.string.txt_encrypt_label_hint)
+        observableState: State<String>,
+        textFieldLabel: String,
+        buttonText: String,
+        buttonClickFn: (String) -> Unit,
     ) {
         TextFieldComponent(textFieldLabel)
-//        //////////////////
-        val name = viewModel.encryptedStringResult.observeAsState().value
-//        if (name.isNotEmpty()) {
-            Text(
-                text = "Hello, $name!",
-                modifier = Modifier.padding(bottom = 8.dp),
-                style = MaterialTheme.typography.bodyMedium
-            )
-//        }
-//        //////////////////
+        TextResultComponent(observableState = observableState)
         Spacer(modifier = Modifier.height(height = 5.dp))
         Row {
             Button(
-                onClick = { viewModel.encryptString("Fernando Cejas") },
+                onClick = { buttonClickFn("hey hey hey") },
             ) {
                 Text(text = buttonText)
             }
-//            ButtonComponent(buttonText)
         }
     }
 
     @Composable
     fun TextFieldComponent(textFieldLabel: String) {
-        var text by remember {
-            mutableStateOf("")
-        }
+        var text by remember { mutableStateOf("") }
 
         TextField(
             value = text,
@@ -152,11 +145,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun ButtonComponent(buttonText: String) {
-        Button(
-            onClick = { viewModel.encryptString("Fernando") },
-        ) {
-            Text(text = buttonText)
+    fun TextResultComponent(observableState: State<String>) {
+        val encryptionDecryptionResult = observableState.value
+
+        if (encryptionDecryptionResult.isNotBlank()) {
+            Text(
+                text = encryptionDecryptionResult,
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
