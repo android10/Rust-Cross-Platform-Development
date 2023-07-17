@@ -9,6 +9,14 @@ import androidx.lifecycle.ViewModel
  */
 class MainViewModel : ViewModel() {
 
+    /**
+     * Just for Learning purpose but
+     * this collaborator should be passed as
+     * a constructor argument of the
+     * [ViewModel].
+     *
+     * @link https://fernandocejas.com/blog/engineering/2019-05-08-architecting-android-reloaded/
+     */
     private val cryptor = Cryptor()
 
     // Encryption
@@ -20,10 +28,10 @@ class MainViewModel : ViewModel() {
     val decryptedStringResult: LiveData<String> = _decryptedStringResult
 
     val encryptString: (String) -> Unit = {
-        _encryptedStringResult.value = it
+        _encryptedStringResult.value = cryptor.encrypt(it)
     }
 
     val decryptString: (String) -> Unit = {
-        _decryptedStringResult.value = it
+        _decryptedStringResult.value = cryptor.decrypt(it)
     }
 }

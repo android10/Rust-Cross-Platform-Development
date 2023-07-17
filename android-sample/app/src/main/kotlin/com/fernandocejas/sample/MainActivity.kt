@@ -121,32 +121,14 @@ class MainActivity : AppCompatActivity() {
         buttonText: String,
         buttonClickFn: (String) -> Unit,
     ) {
-        TextFieldComponent(textFieldLabel)
-        TextResultComponent(observableState = observableState)
-        Spacer(modifier = Modifier.height(height = 5.dp))
-        Row {
-            Button(
-                onClick = { buttonClickFn("hey hey hey") },
-            ) {
-                Text(text = buttonText)
-            }
-        }
-    }
-
-    @Composable
-    fun TextFieldComponent(textFieldLabel: String) {
-        var text by remember { mutableStateOf("") }
+        var textToEncryptDecrypt by remember { mutableStateOf("") }
+        val encryptionDecryptionResult = observableState.value
 
         TextField(
-            value = text,
-            onValueChange = { text = it },
+            value = textToEncryptDecrypt,
+            onValueChange = { textToEncryptDecrypt = it },
             label = { Text(textFieldLabel) }
         )
-    }
-
-    @Composable
-    fun TextResultComponent(observableState: State<String>) {
-        val encryptionDecryptionResult = observableState.value
 
         if (encryptionDecryptionResult.isNotBlank()) {
             Text(
@@ -154,6 +136,16 @@ class MainActivity : AppCompatActivity() {
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.bodyLarge
             )
+        }
+
+        Spacer(modifier = Modifier.height(height = 5.dp))
+
+        Row {
+            Button(
+                onClick = { buttonClickFn(textToEncryptDecrypt) },
+            ) {
+                Text(text = buttonText)
+            }
         }
     }
 }
