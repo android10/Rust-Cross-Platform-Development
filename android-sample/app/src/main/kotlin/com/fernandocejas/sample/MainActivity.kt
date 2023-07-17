@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         TextFieldComponent(textFieldLabel)
 //        //////////////////
-        val name = viewModel.encryptedString.observeAsState().value
+        val name = viewModel.encryptedStringResult.observeAsState().value
 //        if (name.isNotEmpty()) {
             Text(
                 text = "Hello, $name!",

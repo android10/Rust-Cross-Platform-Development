@@ -11,11 +11,21 @@ class MainViewModel : ViewModel() {
 
     private val cryptor = Cryptor()
 
-    private val _encryptedString = MutableLiveData<String>()
-    val encryptedString: LiveData<String> = _encryptedString
+    // Encryption
+    private val _encryptedStringResult = MutableLiveData<String>()
+    val encryptedStringResult: LiveData<String> = _encryptedStringResult
+
+    // Decryption
+    private val _decryptedStringResult = MutableLiveData<String>()
+    val decryptedStringResult: LiveData<String> = _encryptedStringResult
 
     fun encryptString(strToEncrypt: String) {
 //        _encryptedString.value = cryptor.encrypt(strToEncrypt)
-        _encryptedString.value = strToEncrypt
+        _encryptedStringResult.value = strToEncrypt
+    }
+
+    fun decryptString(strToDecrypt: String) {
+//        _encryptedString.value = cryptor.encrypt(strToEncrypt)
+        _decryptedStringResult.value = strToDecrypt
     }
 }
