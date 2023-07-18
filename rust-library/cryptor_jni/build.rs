@@ -2,10 +2,12 @@
 //  - https://doc.rust-lang.org/cargo/reference/build-scripts.html
 //  - https://doc.rust-lang.org/cargo/reference/build-script-examples.html
 
-#![allow(dead_code)] // Avoid false positive warning due to calling members from another module
+// Avoid false positive warning due to 
+// calling members from another module.
+#![allow(dead_code)] 
 
 use std::env;
-use std::{collections::HashMap};
+use std::collections::HashMap;
 use std::io::Write;
 
 use phf::phf_map;
