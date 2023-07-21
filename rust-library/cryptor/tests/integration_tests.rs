@@ -19,3 +19,21 @@ fn test_decrypt_string() {
     
     assert_eq!(str_decoded_b64, decrypted_result);
 }
+
+#[test]
+fn test_decrypt_empty_string() {
+    let empty_str = "";
+
+    let decrypted_result: String = cryptor::decrypt(&empty_str);
+
+    assert_eq!(empty_str, decrypted_result)
+}
+
+#[test]
+fn test_decrypt_invalid_base64_string() {
+    let invalid_base64_str = "dfoiuerw892";
+
+    let decrypted_result: String = cryptor::decrypt(&invalid_base64_str);
+
+    assert_eq!("", decrypted_result)
+}
