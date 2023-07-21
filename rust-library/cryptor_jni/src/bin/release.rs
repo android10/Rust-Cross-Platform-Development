@@ -9,6 +9,7 @@ fn main() {
     release_android_targets();
 }
 
+///
 /// Release android targets from Configuration.
 /// Check out ['build.rs'] File.
 /// 

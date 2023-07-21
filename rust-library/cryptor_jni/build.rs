@@ -54,8 +54,6 @@ impl AndroidConfig {
             android_sdk_dir = env::var("ANDROID_HOME").unwrap(), 
             android_ndk_version = ANDROID_NDK_VERSION
         )
-        //TODO: make this to work
-        // "/home/fernando/Android/Sdk/ndk/25.2.9519653".to_owned()
     }
 
     fn toolchains_dir() -> String {
