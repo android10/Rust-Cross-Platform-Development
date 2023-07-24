@@ -63,7 +63,7 @@ static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/b
 // And the Rust Cross Compilation documentation:
 // - https://rust-lang.github.io/rustup/cross-compilation.html
 //
-pub static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str, &'static str)> = phf_map! {
+pub static ANDROID_TARGETS_CONFIG: phf::Map<&'static str, (&'static str, &'static str, &'static str)> = phf_map! {
     "armv7-linux-androideabi" => ("arm-linux-androideabi-ar", "armv7a-linux-androideabi21-clang", "armeabi-v7a"),
     "aarch64-linux-android" => ("aarch64-linux-android-ar", "aarch64-linux-android21-clang", "arm64-v8a"),
     "i686-linux-android" => ("i686-linux-android-ar", "i686-linux-android21-clang", "x86"),
@@ -124,10 +124,10 @@ fn build_linker(linker_path: &str) -> String {
 
 fn android_targets<'a>() -> AndroidTargets<'a> {
     let mut android_targets = AndroidTargets { 
-        targets: HashMap::with_capacity(ANDROID_TARGETS.len()) 
+        targets: HashMap::with_capacity(ANDROID_TARGETS_CONFIG.len()) 
     };
 
-    for (target, config) in ANDROID_TARGETS.entries() {
+    for (target, config) in ANDROID_TARGETS_CONFIG.entries() {
         let target_config = AndroidTargetConfig { 
             ar: build_archiver(config.0), 
             linker: build_linker(config.1) 
@@ -143,7 +143,10 @@ fn android_targets<'a>() -> AndroidTargets<'a> {
 /// The file `.cargo/config` is necessary to be able to allow 
 /// `cargo` to create our android targets. 
 /// 
-/// This file should look like this (example for NDK 25.2.9519653): 
+/// - https://doc.rust-lang.org/cargo/reference/config.html 
+/// 
+/// The config file should look like this, as 
+/// an example for Linux and Android NDK 25.2.9519653: 
 /// 
 /// ```
 /// [target.armv7-linux-androideabi]
@@ -187,7 +190,7 @@ fn add_android_targets_to_toolchain() {
     command_args.push("target");
     command_args.push("add");
     
-    for target in ANDROID_TARGETS.keys() {
+    for target in ANDROID_TARGETS_CONFIG.keys() {
         command_args.push(target)
     }
 
@@ -199,4 +202,31 @@ fn main() {
 
     create_android_targets_config_file();
     add_android_targets_to_toolchain();
+}
+
+//
+// T E S T S 
+//
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn android_targets_and_config_same_size() {
+        let android_targets = android_targets().targets; 
+        assert_eq!(&android_targets.len() , &ANDROID_TARGETS_CONFIG.len());
+    }
+
+    #[test]
+    fn android_targets_links_to_proper_target_config() {
+        for target_config in ANDROID_TARGETS_CONFIG.entries() {
+            let target_config_key = target_config.0;
+            let target_config_abi = target_config.1.2;
+
+            if target_config_key.starts_with("armv7") { assert_eq!(target_config_abi, "armeabi-v7a") }
+            if target_config_key.starts_with("aarch64") { assert_eq!(target_config_abi, "arm64-v8a") }
+            if target_config_key.starts_with("i686") { assert_eq!(target_config_abi, "x86") }
+            if target_config_key.starts_with("x86_64") { assert_eq!(target_config_abi, "x86-64") }
+        }
+    }
 }
