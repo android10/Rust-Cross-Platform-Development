@@ -32,12 +32,13 @@ use cryptor_global::system;
 static ANDROID_NDK_VERSION: &str = "25.2.9519653";
 static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/bin/";
 
-/**
- * Due to Rust limitations on generating a static Map with a custom type, a tuple was 
- * needed with the following value representation:
- *  - Tuple.0 = Archiver to be used to assemble static libraries compiled from C/C++ code. 
- *  - Tuple.1 = Linker to be used to link Rust code.
- */
+//
+// Due to Rust limitations on generating a static Map with a custom type, a tuple is 
+// needed with the following value representation:
+// 
+//  - Tuple.0 = Archiver to be used to assemble static libraries compiled from C/C++ code. 
+//  - Tuple.1 = Linker to be used to link Rust code.
+//
 pub static ANDROID_TARGETS: phf::Map<&'static str, (&'static str, &'static str)> = phf_map! {
     "armv7-linux-androideabi" => ("arm-linux-androideabi-ar", "armv7a-linux-androideabi21-clang"),
     "aarch64-linux-android" => ("aarch64-linux-android-ar", "aarch64-linux-android21-clang"),
@@ -57,7 +58,11 @@ impl AndroidConfig {
     }
 
     fn toolchains_dir() -> String {
-        format!("{ndk}{toolchains}", ndk = Self::ndk_dir(), toolchains = ANDROID_TOOLCHAINS_PATH) 
+        format!(
+            "{ndk}{toolchains}", 
+            ndk = Self::ndk_dir(), 
+            toolchains = ANDROID_TOOLCHAINS_PATH
+        ) 
     }
 }
 
@@ -78,11 +83,19 @@ struct AndroidTargetConfig {
 }
 
 fn build_archiver(archiver_path: &str) -> String {
-    format!("{toolchain}{ar}", toolchain=AndroidConfig::toolchains_dir(), ar=archiver_path)
+    format!(
+        "{toolchain}{ar}", 
+        toolchain=AndroidConfig::toolchains_dir(), 
+        ar=archiver_path
+    )
 }
 
 fn build_linker(linker_path: &str) -> String {
-    format!("{toolchain}{linker}", toolchain=AndroidConfig::toolchains_dir(), linker=linker_path)
+    format!(
+        "{toolchain}{linker}", 
+        toolchain=AndroidConfig::toolchains_dir(), 
+        linker=linker_path
+    )
 } 
 
 fn android_targets<'a>() -> AndroidTargets<'a> {
