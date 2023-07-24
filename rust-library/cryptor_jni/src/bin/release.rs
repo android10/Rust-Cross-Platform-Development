@@ -1,6 +1,8 @@
 // Cargo targets: https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries
 
-#[path="../../build.rs"] mod build;
+// https://doc.rust-lang.org/reference/items/modules.html
+#[path="../../build.rs"] 
+mod build;
 
 use cryptor_global::console;
 
@@ -11,11 +13,13 @@ fn main() {
 
 ///
 /// Release android targets from Configuration.
-/// Check out ['build.rs'] File.
+/// Check ['build.rs'] File.
 /// 
 /// Examples of executed command:
 /// ```
 /// cargo build --target aarch64-linux-android --release
+/// cargo build --target armv7-linux-androideabi --release
+/// cargo build --target armv7-linux-androideabi --release
 /// cargo build --target armv7-linux-androideabi --release
 /// ```
 fn release_android_targets() {
