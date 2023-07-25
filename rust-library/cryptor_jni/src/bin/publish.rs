@@ -10,39 +10,74 @@ use std::path::MAIN_SEPARATOR_STR;
 
 use cryptor_global::{console, io};
 
+///
+/// Returns the directory path where the release 
+/// version of this crate is placed.
+/// 
+/// ## Example
+/// 
+/// `$ rust-library/target`
+/// 
+fn release_target_dir_path() -> String {
+    let current_dir_path = env::current_dir().expect(
+        "Cannot read current directory"
+    );
+    let target_dir_path = current_dir_path.parent().expect(
+        "Cannot find/read 'target' directory"
+    );
+    
+    target_dir_path.as_os_str().to_str().expect(
+        "Cannot validate 'target' directory"
+    ).to_owned()
+}
+
+///
+/// Returns the jni directory path in the android project 
+/// where the release version of this crate should be 
+/// placed.
+/// 
+/// ## Example
+/// 
+/// `$ android-sample/app/src/main/jniLibs`
+///
+fn android_jni_libs_dir_path() -> String {
+    "".to_owned()
+}
+
+///
+/// Returns the file path where the 
+/// release version of this crate 
+/// is placed ('libcryptor_jni.so').
+/// 
+/// ## Example
+/// 
+/// `$ rust-library/target/x86_64-linux-android/release/libcryptor_jni.so`
+/// 
+fn crate_file_path_for_target(android_target: &str) -> String {
+    "".to_owned()
+}
 
 fn main() {
-    let current_dir = env::current_dir().expect("Cannot read current directory");
-    let target_dir = current_dir.parent().expect("Cannot find/read 'target' directory");
-    let target_dir_str = target_dir.as_os_str().to_str().expect("Cannot validate 'target' directory");
+    let release_target_path = release_target_dir_path();
 
     for android_target in build::ANDROID_TARGETS_CONFIG.keys() {
-        let mut current_target_lib_file_path =
+        let mut crate_lib_file_path = release_target_path.to_owned();
 
+        crate_lib_file_path.push_str(MAIN_SEPARATOR_STR);
+        crate_lib_file_path.push_str("target");
+        crate_lib_file_path.push_str(MAIN_SEPARATOR_STR);
+        crate_lib_file_path.push_str(&android_target);
+        crate_lib_file_path.push_str(MAIN_SEPARATOR_STR);
+        crate_lib_file_path.push_str("release");
+        crate_lib_file_path.push_str(MAIN_SEPARATOR_STR);
+        crate_lib_file_path.push_str("libcryptor_jni.so");
 
-        // fn dotfiles_dir(&self) -> Result<String, DotyError> {
-        //     let mut dotfiles_dir = env::var(USSER_HOME_ENV)
-        //         .map_err(|_| DotyError::DotfilesInvalidDir)?;
-    
-        //     dotfiles_dir.push_str(MAIN_SEPARATOR_STR);
-        //     dotfiles_dir.push_str(DOTFILES_DIR_NAME);
-    
-        //     metadata(&dotfiles_dir)
-        //         .map_err(|_| DotyError::DotfilesInvalidDir)?;
-    
-        //     Ok(dotfiles_dir)
-        // }
-
-
-        // let current_target_lib_file = PathBuf::from(
-        //     format!("{crate_dir}/target/{target}/release/libcryptor_jni.so", crate_dir = target_dir_str, target = android_target)
-        // );
-
-        // // console::out(&current_target_lib_file.into_os_string().to_str().unwrap());
-
-        // if current_target_lib_file.exists() {
-        //     console::out("it exists!!!");
-        //     console::print(format!("Android Target {} succesfully copied!!!", &android_target));
-        // }
+        if PathBuf::from(&crate_lib_file_path).exists() {
+            console::out("it exists!!!");
+            console::print(format!("Android Target {} succesfully copied!!!", &android_target));
+            console::print(format!("File: {}", &crate_lib_file_path));
+        } else {
+            println!("ERROR!!!");
+        }
     }
 }
