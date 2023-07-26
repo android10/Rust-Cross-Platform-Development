@@ -11,10 +11,13 @@ use std::path::MAIN_SEPARATOR_STR;
 
 use cryptor_global::{console, io};
 
+// Represents the crate/lib file name generated
+static JNI_LIB_FILE_NAME: &str = "libcryptor_jni.so";
+
 ///
 /// Returns the project directory path.
 /// 
-/// ## Example
+/// ## Examples
 /// 
 /// `$ rust-library/`
 /// 
@@ -36,7 +39,11 @@ fn project_dir_path() -> String {
 /// where the release version of this crate should be 
 /// placed.
 /// 
-/// ## Example
+/// ## Arguments
+///
+/// * `android_jni_lib_folder` - A string slice that holds the name of the android target.
+/// 
+/// ## Examples
 /// 
 /// `$ android-sample/app/src/main/jniLibs`
 ///
@@ -63,6 +70,7 @@ fn android_jni_dir_path(android_jni_lib_folder: &str) -> String {
     android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
     android_jni_file_path.push_str(&android_jni_lib_folder);
     android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    android_jni_file_path.push_str(JNI_LIB_FILE_NAME);
     
     android_jni_file_path
 }
@@ -70,11 +78,16 @@ fn android_jni_dir_path(android_jni_lib_folder: &str) -> String {
 ///
 /// Returns the file path where the 
 /// release version of this crate 
-/// is placed ('libcryptor_jni.so').
+/// is placed.
 /// 
-/// ## Example
+/// ## Arguments
+///
+/// * `project_dir_path` - A string slice that holds thsi project directory path.
+/// * `android_target` - A string slice that holds the name of the android target.
 /// 
-/// `$ rust-library/target/x86_64-linux-android/release/libcryptor_jni.so`
+/// ## Examples
+/// 
+/// `$ rust-library/target/x86_64-linux-android/release/JNI_LIB_FILE_NAME`
 /// 
 fn crate_file_path_for_target(project_dir_path: &str, android_target: &str) -> String {
     let mut crate_lib_file_path = project_dir_path.to_owned();
@@ -86,7 +99,7 @@ fn crate_file_path_for_target(project_dir_path: &str, android_target: &str) -> S
     crate_lib_file_path.push_str(MAIN_SEPARATOR_STR);
     crate_lib_file_path.push_str("release");
     crate_lib_file_path.push_str(MAIN_SEPARATOR_STR);
-    crate_lib_file_path.push_str("libcryptor_jni.so");
+    crate_lib_file_path.push_str(JNI_LIB_FILE_NAME);
 
     crate_lib_file_path
 }
@@ -96,10 +109,10 @@ fn publish_jni_lib_to_android_project() -> Result<String, Box<dyn Error>> {
 
     // we loop through all android targets
     for android_target in build::ANDROID_TARGETS_CONFIG.keys() {
-        // get the path of the 'libcryptor_jni.so' file.
+        // get the path of the 'JNI_LIB_FILE_NAME' file.
         let crate_lib_file_path = crate_file_path_for_target(&project_dir_path, &android_target);
         
-        // get the jni android folder name to place our 'libcryptor_jni.so' file.
+        // get the jni android folder name to place our 'JNI_LIB_FILE_NAME' file.
         let android_jni_lib_folder = build::ANDROID_TARGETS_CONFIG.get(&android_target).expect(
             "Cannot find 'jniLib' folder in 'android-sample' project."
         ).2;
@@ -110,7 +123,7 @@ fn publish_jni_lib_to_android_project() -> Result<String, Box<dyn Error>> {
         if PathBuf::from(&crate_lib_file_path).exists() {
             io::copy_file(&crate_lib_file_path, &android_lib_file_path)?;
         } else {
-            return Err("Error copying 'libcryptor_jni.so' file".into())
+            return Err("Error copying library file".into())
         }
     }
 
