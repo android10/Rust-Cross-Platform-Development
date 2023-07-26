@@ -5,29 +5,29 @@
 mod build;
 
 use std::env;
+use std::error::Error;
 use std::path::PathBuf;
 use std::path::MAIN_SEPARATOR_STR;
 
 use cryptor_global::{console, io};
 
 ///
-/// Returns the directory path where the release 
-/// version of this crate is placed.
+/// Returns the project directory path.
 /// 
 /// ## Example
 /// 
-/// `$ rust-library/target`
+/// `$ rust-library/`
 /// 
-fn release_target_dir_path() -> String {
+fn project_dir_path() -> String {
     let current_dir_path = env::current_dir().expect(
         "Cannot read current directory"
     );
     let target_dir_path = current_dir_path.parent().expect(
-        "Cannot find/read 'target' directory"
+        "Cannot find/read 'rust-library' directory"
     );
     
     target_dir_path.as_os_str().to_str().expect(
-        "Cannot validate 'target' directory"
+        "Cannot validate 'rust-library' directory"
     ).to_owned()
 }
 
@@ -40,8 +40,31 @@ fn release_target_dir_path() -> String {
 /// 
 /// `$ android-sample/app/src/main/jniLibs`
 ///
-fn android_jni_file_path_for_target(android_target: &str) -> String {
-    "".to_owned()
+fn android_jni_dir_path(android_jni_lib_folder: &str) -> String {
+    let project_dir = PathBuf::from(project_dir_path());
+    let android_project_dir_path = project_dir.parent().expect(
+        "Cannot find/read 'android-sample' directory"
+    );
+    
+    let mut android_jni_file_path = android_project_dir_path.as_os_str().to_str().expect(
+        "Cannot validate 'android-sample' directory"
+    ).to_owned();
+
+    android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    android_jni_file_path.push_str("android-sample");
+    android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    android_jni_file_path.push_str("app");
+    android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    android_jni_file_path.push_str("src");
+    android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    android_jni_file_path.push_str("main");
+    android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    android_jni_file_path.push_str("jniLibs");
+    android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    android_jni_file_path.push_str(&android_jni_lib_folder);
+    android_jni_file_path.push_str(MAIN_SEPARATOR_STR);
+    
+    android_jni_file_path
 }
 
 ///
@@ -53,8 +76,8 @@ fn android_jni_file_path_for_target(android_target: &str) -> String {
 /// 
 /// `$ rust-library/target/x86_64-linux-android/release/libcryptor_jni.so`
 /// 
-fn crate_file_path_for_target(target_release_path: &str, android_target: &str) -> String {
-    let mut crate_lib_file_path = target_release_path.to_owned();
+fn crate_file_path_for_target(project_dir_path: &str, android_target: &str) -> String {
+    let mut crate_lib_file_path = project_dir_path.to_owned();
 
     crate_lib_file_path.push_str(MAIN_SEPARATOR_STR);
     crate_lib_file_path.push_str("target");
@@ -68,24 +91,35 @@ fn crate_file_path_for_target(target_release_path: &str, android_target: &str) -
     crate_lib_file_path
 }
 
-fn publish_jni_lib_to_android_project() {
-    let release_target_path = release_target_dir_path();
+fn publish_jni_lib_to_android_project() -> Result<String, Box<dyn Error>> {
+    let project_dir_path = project_dir_path();
 
+    // we loop through all android targets
     for android_target in build::ANDROID_TARGETS_CONFIG.keys() {
-        let crate_lib_file_path = crate_file_path_for_target(&release_target_path, &android_target);
-        let android_lib_file_path = android_jni_file_path_for_target(&android_target);
+        // get the path of the 'libcryptor_jni.so' file.
+        let crate_lib_file_path = crate_file_path_for_target(&project_dir_path, &android_target);
+        
+        // get the jni android folder name to place our 'libcryptor_jni.so' file.
+        let android_jni_lib_folder = build::ANDROID_TARGETS_CONFIG.get(&android_target).expect(
+            "Cannot find 'jniLib' folder in 'android-sample' project."
+        ).2;
 
-        if PathBuf::from(&crate_lib_file_path).exists() && 
-        PathBuf::from(&android_lib_file_path).exists() {
-            console::out("it exists!!!");
-            console::print(format!("Android Target {} succesfully copied!!!", &android_target));
-            console::print(format!("File: {}", &crate_lib_file_path));
+        // build the entire jniLib based on the current android target
+        let android_lib_file_path = android_jni_dir_path(&android_jni_lib_folder);
+
+        if PathBuf::from(&crate_lib_file_path).exists() {
+            io::copy_file(&crate_lib_file_path, &android_lib_file_path)?;
         } else {
-            println!("ERROR!!!");
+            return Err("Error copying 'libcryptor_jni.so' file".into())
         }
     }
+
+    Ok("".to_owned())
 }
 
 fn main() {
-    publish_jni_lib_to_android_project();
+    match publish_jni_lib_to_android_project() {
+        Ok(success_message) => console::print(success_message),
+        Err(error) => console::print(error.to_string()),
+    }
 }
