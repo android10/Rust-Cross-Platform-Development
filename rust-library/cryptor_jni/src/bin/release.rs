@@ -19,7 +19,7 @@ mod build;
 /// cargo build --target x86_64-linux-android --release
 /// ```
 fn release_android_targets() {
-    for target in build::ANDROID_TARGETS_CONFIG.keys() {
+    for target in build::ANDROID_TARGET_ABI_CONFIG.keys() {
         console::print(format!("Building Android Target --> {}", &target));
 
         let command_args = build_command_args_for_target(&target);
@@ -69,7 +69,7 @@ mod tests {
 
     #[test]
     fn test_build_android_release_arguments_for_all_targets() {
-        for target in build::ANDROID_TARGETS_CONFIG.keys() {
+        for target in build::ANDROID_TARGET_ABI_CONFIG.keys() {
             let command_args = build_command_args_for_target(&target);
             let expected_result = format!("build --target {target} --release", target = &target);
 

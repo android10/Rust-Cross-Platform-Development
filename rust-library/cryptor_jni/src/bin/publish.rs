@@ -108,12 +108,12 @@ fn publish_jni_lib_to_android_project() -> Result<String, Box<dyn Error>> {
     let project_dir_path = project_dir_path();
 
     // we loop through all android targets
-    for android_target in build::ANDROID_TARGETS_CONFIG.keys() {
+    for android_target in build::ANDROID_TARGET_ABI_CONFIG.keys() {
         // get the path of the 'JNI_LIB_FILE_NAME' file.
         let crate_lib_file_path = crate_file_path_for_target(&project_dir_path, &android_target);
         
         // get the jni android folder name to place our 'JNI_LIB_FILE_NAME' file.
-        let android_jni_lib_folder = build::ANDROID_TARGETS_CONFIG.get(&android_target).expect(
+        let android_jni_lib_folder = build::ANDROID_TARGET_ABI_CONFIG.get(&android_target).expect(
             "Cannot find 'jniLib' folder in 'android-sample' project."
         ).2;
 

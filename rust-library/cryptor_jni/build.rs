@@ -16,6 +16,8 @@ use phf::phf_map;
 use serde::Serialize;
 use toml;
 
+use std::path::MAIN_SEPARATOR_STR;
+
 use cryptor_global::io;
 use cryptor_global::console;
 use cryptor_global::system;
@@ -29,46 +31,98 @@ use cryptor_global::system;
 //
 // Andrid NDK Configuration:
 //  - https://developer.android.com/studio/projects/install-ndk#specific-version
+// 
+// Android Use the NDK with other build systems:
+//  - https://developer.android.com/ndk/guides/other_build_systems
 // -----------------------------------------------------------------------------------------------
 static ANDROID_NDK_VERSION: &str = "25.2.9519653";
-static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/bin/";
 
-//
-// Due to Rust limitations on generating a static Map with a custom type, a tuple is 
-// needed with the following value representation:
-// 
-//  - Tuple.0 = Archiver to be used to assemble static libraries compiled from C/C++ (Rust) code. 
-//  - Tuple.1 = Linker to be used to link Rust code.
-//  - Tuple.2 = ABI (Application Binary Interface) related to Tuple.0 target.
-//
-// ABI (Application Binary Interface) explanation:
-// 
-// Each generated Target relates to an ABI (Application Binary Interface, which is a combination of 
-// CPU type and instruction set). According to the official android documentation, we map each
-// target with its corresponding directory (ABI) in our Android client as following: 
-//
-// -------------------------------------------------------------------------------------
-//  ANDROID TARGET                ABI (folder in the android project inside `jniLibs`)
-//  ------------------------------------------------------------------------------------
-//  armv7a-linux-androideabi ---> armeabi-v7a  
-//  aarch64-linux-android    ---> arm64-v8a    
-//  i686-linux-android       ---> x86	        
-//  x86_64-linux-android     ---> x86_64       
-// -------------------------------------------------------------------------------------
-// 
-// For more information, check the Official Android documentation: 
-//  - https://developer.android.com/ndk/guides/other_build_systems
-//  - https://developer.android.com/ndk/guides/abis
-// 
-// And the Rust Cross Compilation documentation:
-// - https://rust-lang.github.io/rustup/cross-compilation.html
-//
-pub static ANDROID_TARGETS_CONFIG: phf::Map<&'static str, (&'static str, &'static str, &'static str)> = phf_map! {
+///
+/// Due to Rust limitations on generating a static Map with a custom type, a tuple is 
+/// needed with the following value representation:
+/// 
+///  - Tuple.0 = Archiver to be used to assemble static libraries compiled from C/C++ (Rust) code. 
+///  - Tuple.1 = Linker to be used to link Rust code.
+///  - Tuple.2 = ABI (Application Binary Interface) related to Tuple.0 target.
+///
+/// ABI (Application Binary Interface) explanation:
+/// 
+/// Each generated Target relates to an ABI (Application Binary Interface, which is a combination of 
+/// CPU type and instruction set). According to the official android documentation, we map each
+/// target with its corresponding directory (ABI) in our Android client as following: 
+///
+/// ```
+/// -------------------------------------------------------------------------------------
+///  ANDROID TARGET                ABI (folder in the android project inside `jniLibs`)
+///  ------------------------------------------------------------------------------------
+///  armv7a-linux-androideabi ---> armeabi-v7a  
+///  aarch64-linux-android    ---> arm64-v8a    
+///  i686-linux-android       ---> x86	        
+///  x86_64-linux-android     ---> x86_64       
+/// -------------------------------------------------------------------------------------
+/// ```
+/// 
+/// For more information, check the Official Android documentation: 
+///  - https://developer.android.com/ndk/guides/other_build_systems
+///  - https://developer.android.com/ndk/guides/abis
+/// 
+/// And the Rust Cross Compilation documentation:
+/// - https://rust-lang.github.io/rustup/cross-compilation.html
+///
+pub static ANDROID_TARGET_ABI_CONFIG: phf::Map<&'static str, (&'static str, &'static str, &'static str)> = phf_map! {
     "armv7-linux-androideabi" => ("arm-linux-androideabi-ar", "armv7a-linux-androideabi21-clang", "armeabi-v7a"),
     "aarch64-linux-android" => ("aarch64-linux-android-ar", "aarch64-linux-android21-clang", "arm64-v8a"),
     "i686-linux-android" => ("i686-linux-android-ar", "i686-linux-android21-clang", "x86"),
     "x86_64-linux-android" => ("x86_64-linux-android-ar", "x86_64-linux-android21-clang", "x86_64"),
 };
+
+/// 
+/// This returns the android tool chain path 
+/// based on current host operating system. 
+/// 
+/// NDK tag according to the host OS:
+/// 
+/// ```
+/// -----------------------------------------
+///  NDK OS Variant      Host Tag
+///  ----------------------------------------
+///  Linux               ---> linux-x86_64  
+///  macOS               ---> darwin-x86_64    
+///  64-bit Windows      ---> windows-x86_64
+/// -----------------------------------------
+/// ```
+/// 
+/// For more information, check the Official Android documentation: 
+///  - https://developer.android.com/ndk/guides/other_build_systems
+///
+/// ## Examples
+/// 
+/// `/toolchains/llvm/prebuilt/linux-x86_64/bin/`
+/// 
+fn android_tool_chain_path() -> String {
+    // https://doc.rust-lang.org/std/env/consts/constant.OS.html
+    let android_ndk_host_tag = match env::consts::OS {
+        "linux" => "linux-x86_64",
+        "macos" => "darwin-x86_64",
+        "windows" => "windows-x86_64",
+        _ => "linux-x86_64",
+    };
+
+    let mut android_tool_chain = String::from(MAIN_SEPARATOR_STR);
+
+    android_tool_chain.push_str("toolchains");
+    android_tool_chain.push_str(MAIN_SEPARATOR_STR);
+    android_tool_chain.push_str("llvm");
+    android_tool_chain.push_str(MAIN_SEPARATOR_STR);
+    android_tool_chain.push_str("prebuilt");
+    android_tool_chain.push_str(MAIN_SEPARATOR_STR);
+    android_tool_chain.push_str(&android_ndk_host_tag);
+    android_tool_chain.push_str(MAIN_SEPARATOR_STR);
+    android_tool_chain.push_str("bin");
+    android_tool_chain.push_str(MAIN_SEPARATOR_STR);
+
+    android_tool_chain
+}
 // -----------------------------------------------------------------------------------------------
 
 struct AndroidConfig;
@@ -85,7 +139,7 @@ impl AndroidConfig {
         format!(
             "{ndk}{toolchains}", 
             ndk = Self::ndk_dir(), 
-            toolchains = ANDROID_TOOLCHAINS_PATH
+            toolchains = android_tool_chain_path(),
         ) 
     }
 }
@@ -124,10 +178,10 @@ fn build_linker(linker_path: &str) -> String {
 
 fn android_targets<'a>() -> AndroidTargets<'a> {
     let mut android_targets = AndroidTargets { 
-        targets: HashMap::with_capacity(ANDROID_TARGETS_CONFIG.len()) 
+        targets: HashMap::with_capacity(ANDROID_TARGET_ABI_CONFIG.len()) 
     };
 
-    for (target, config) in ANDROID_TARGETS_CONFIG.entries() {
+    for (target, config) in ANDROID_TARGET_ABI_CONFIG.entries() {
         let target_config = AndroidTargetConfig { 
             ar: build_archiver(config.0), 
             linker: build_linker(config.1) 
@@ -190,7 +244,7 @@ fn add_android_targets_to_toolchain() {
     command_args.push("target");
     command_args.push("add");
     
-    for target in ANDROID_TARGETS_CONFIG.keys() {
+    for target in ANDROID_TARGET_ABI_CONFIG.keys() {
         command_args.push(target)
     }
 
@@ -214,12 +268,12 @@ mod tests {
     #[test]
     fn android_targets_and_config_same_size() {
         let android_targets = android_targets().targets; 
-        assert_eq!(&android_targets.len() , &ANDROID_TARGETS_CONFIG.len());
+        assert_eq!(&android_targets.len() , &ANDROID_TARGET_ABI_CONFIG.len());
     }
 
     #[test]
     fn android_targets_links_to_proper_target_config() {
-        for target_config in ANDROID_TARGETS_CONFIG.entries() {
+        for target_config in ANDROID_TARGET_ABI_CONFIG.entries() {
             let target_config_key = target_config.0;
             let target_config_abi = target_config.1.2;
 
