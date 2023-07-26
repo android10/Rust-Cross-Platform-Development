@@ -127,7 +127,7 @@ fn publish_jni_lib_to_android_project() -> Result<String, Box<dyn Error>> {
         }
     }
 
-    Ok("".to_owned())
+    Ok("JNI Libs Succesfully Published to the Android Project!!!".to_owned())
 }
 
 fn main() {

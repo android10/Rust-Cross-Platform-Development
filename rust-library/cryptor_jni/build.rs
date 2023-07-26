@@ -53,7 +53,7 @@ static ANDROID_TOOLCHAINS_PATH: &str = "/toolchains/llvm/prebuilt/linux-x86_64/b
 //  armv7a-linux-androideabi ---> armeabi-v7a  
 //  aarch64-linux-android    ---> arm64-v8a    
 //  i686-linux-android       ---> x86	        
-//  x86_64-linux-android     ---> x86-64       
+//  x86_64-linux-android     ---> x86_64       
 // -------------------------------------------------------------------------------------
 // 
 // For more information, check the Official Android documentation: 
@@ -67,7 +67,7 @@ pub static ANDROID_TARGETS_CONFIG: phf::Map<&'static str, (&'static str, &'stati
     "armv7-linux-androideabi" => ("arm-linux-androideabi-ar", "armv7a-linux-androideabi21-clang", "armeabi-v7a"),
     "aarch64-linux-android" => ("aarch64-linux-android-ar", "aarch64-linux-android21-clang", "arm64-v8a"),
     "i686-linux-android" => ("i686-linux-android-ar", "i686-linux-android21-clang", "x86"),
-    "x86_64-linux-android" => ("x86_64-linux-android-ar", "x86_64-linux-android21-clang", "x86-64"),
+    "x86_64-linux-android" => ("x86_64-linux-android-ar", "x86_64-linux-android21-clang", "x86_64"),
 };
 // -----------------------------------------------------------------------------------------------
 
