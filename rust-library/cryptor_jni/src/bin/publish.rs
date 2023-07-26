@@ -9,7 +9,10 @@ use std::error::Error;
 use std::path::PathBuf;
 use std::path::MAIN_SEPARATOR_STR;
 
-use cryptor_global::{console, io};
+use cryptor_global::{
+    console, 
+    io,
+};
 
 // Represents the crate/lib file name generated
 static JNI_LIB_FILE_NAME: &str = "libcryptor_jni.so";

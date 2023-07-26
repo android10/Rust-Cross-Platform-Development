@@ -129,8 +129,9 @@ struct AndroidConfig;
 impl AndroidConfig {
     fn ndk_dir() -> String {
         format!(
-            "{android_sdk_dir}/ndk/{android_ndk_version}",
+            "{android_sdk_dir}{separator}ndk{separator}{android_ndk_version}",
             android_sdk_dir = env::var("ANDROID_HOME").unwrap(), 
+            separator = MAIN_SEPARATOR_STR,
             android_ndk_version = ANDROID_NDK_VERSION
         )
     }
