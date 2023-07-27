@@ -1,10 +1,24 @@
-// Cargo targets: https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries
+/// This is a binary targets, which is an executable program 
+/// that can be run after crate compilation.
+/// 
+/// It will basically build release versions of 
+/// each android target. 
+/// 
+/// ## Examples
+/// ```
+/// $ cd cryptor_jni/
+/// $ cargo run --bin release 
+/// ``` 
+/// 
+/// For more information, refer to the official doc:
+///  - https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries
 
-use cryptor_global::console;
 
 // https://doc.rust-lang.org/reference/items/modules.html
 #[path="../../build.rs"] 
 mod build;
+
+use cryptor_global::console;
 
 ///
 /// Release android targets from Configuration.

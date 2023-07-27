@@ -1,4 +1,19 @@
-// Cargo targets: https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries
+/// This is a binary targets, which is an executable program 
+/// that can be run after crate compilation.
+/// 
+/// It will basically copy the 'release' version
+/// of this crate to the corresponding android 
+/// project. 
+/// 
+/// ## Examples
+/// ```
+/// $ cd cryptor_jni/
+/// $ cargo run --bin publish 
+/// ``` 
+/// 
+/// For more information, refer to the official doc:
+///  - https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries
+
 
 // https://doc.rust-lang.org/reference/items/modules.html
 #[path="../../build.rs"] 
@@ -107,6 +122,10 @@ fn crate_file_path_for_target(project_dir_path: &str, android_target: &str) -> S
     crate_lib_file_path
 }
 
+///
+/// Copy the release version of each android target to the corresponding
+/// directory in the android project. 
+/// 
 fn publish_jni_lib_to_android_project() -> Result<String, Box<dyn Error>> {
     let project_dir_path = project_dir_path();
 
