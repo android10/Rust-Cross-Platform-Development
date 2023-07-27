@@ -160,3 +160,16 @@ fn main() {
         Err(error) => console::print(error.to_string()),
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    #[should_panic(expected = "android jni was not found")]
+    fn non_existent_android_jni_dir() {
+        let android_jni_dir = android_jni_dir_path("some randon folder");
+        assert_eq!(android_jni_dir, "some randon folder");
+    }
+}

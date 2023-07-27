@@ -1,9 +1,17 @@
+///
 /// [cfg(target_os = "android")]: Compiler flag ("cfg") which exposes
 /// the JNI interface for targeting Android in this case
 /// 
 /// [allow(non_snake_case)]: Tells the compiler not to warn if
 /// we are not using snake_case for a variable or function names.
 /// For Android Development we want to be consistent with code style. 
+/// 
+/// Some useful links:
+///  - https://doc.rust-lang.org/reference/items/external-blocks.html
+///  - https://doc.rust-lang.org/reference/abi.html
+///  - https://doc.rust-lang.org/reference/items/functions.html#extern-function-qualifier
+///  - https://doc.rust-lang.org/reference/items/external-blocks.html 
+/// 
 #[cfg(target_os = "android")]
 #[allow(non_snake_case)]
 pub mod android {
@@ -30,7 +38,9 @@ pub mod android {
     use cryptor::encrypt;
     use cryptor::decrypt;
 
+    ///
     /// Encrypts a String.
+    /// 
     #[no_mangle] // This keeps Rust from "mangling" the name so it is unique (crate).
     pub extern "system" fn Java_com_fernandocejas_rust_Cryptor_encrypt<'local>(
         mut env: JNIEnv<'local>,
@@ -56,7 +66,9 @@ pub mod android {
         output.into_raw()
     }
     
+    ///
     /// Decrypts a String.
+    /// 
     #[no_mangle] // This keeps Rust from "mangling" the name so it is unique (crate).
     pub extern "system" fn Java_com_fernandocejas_rust_Cryptor_decrypt<'local>(
         mut env: JNIEnv<'local>,
