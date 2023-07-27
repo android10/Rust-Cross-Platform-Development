@@ -1,3 +1,4 @@
+///
 /// This is a binary targets, which is an executable program 
 /// that can be run after crate compilation.
 /// 
@@ -12,6 +13,7 @@
 /// 
 /// For more information, refer to the official doc:
 ///  - https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries
+///
 
 
 // https://doc.rust-lang.org/reference/items/modules.html
