@@ -167,9 +167,10 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic(expected = "android jni was not found")]
-    fn non_existent_android_jni_dir() {
-        let android_jni_dir = android_jni_dir_path("some randon folder");
-        assert_eq!(android_jni_dir, "some randon folder");
+    fn android_jni_dir() {
+        let android_jni_folder_name = "arm64-v8a";
+        let android_jni_dir = android_jni_dir_path(android_jni_folder_name);
+        
+        assert!(android_jni_dir.contains(android_jni_folder_name));
     }
 }
