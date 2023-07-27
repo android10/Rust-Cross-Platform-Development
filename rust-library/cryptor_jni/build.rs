@@ -281,7 +281,7 @@ mod tests {
             if target_config_key.starts_with("armv7") { assert_eq!(target_config_abi, "armeabi-v7a") }
             if target_config_key.starts_with("aarch64") { assert_eq!(target_config_abi, "arm64-v8a") }
             if target_config_key.starts_with("i686") { assert_eq!(target_config_abi, "x86") }
-            if target_config_key.starts_with("x86_64") { assert_eq!(target_config_abi, "x86-64") }
+            if target_config_key.starts_with("x86_64") { assert_eq!(target_config_abi, "x86_64") }
         }
     }
 }
