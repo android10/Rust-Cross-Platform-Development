@@ -167,10 +167,34 @@ mod tests {
     use super::*;
 
     #[test]
-    fn android_jni_dir() {
-        let android_jni_folder_name = "arm64-v8a";
-        let android_jni_dir = android_jni_dir_path(android_jni_folder_name);
-        
-        assert!(android_jni_dir.contains(android_jni_folder_name));
+    fn android_jni_dir_path_includes_proper_folder_names() {
+        let jni_folder_name = "arm64-v8a";
+        let jni_dir = android_jni_dir_path(jni_folder_name);
+
+        assert!(jni_dir.contains("android-sample"));
+        assert!(jni_dir.contains("app"));
+        assert!(jni_dir.contains("src"));
+        assert!(jni_dir.contains("main"));
+        assert!(jni_dir.contains("jniLibs"));
+        assert!(jni_dir.contains(jni_folder_name));
+    }
+
+    #[test]
+    fn crate_file_path_for_target_includes_proper_folder_names() {
+        let project_dir_path = "fernando";
+        let android_target = "android";
+        let crate_file_path = crate_file_path_for_target(project_dir_path, android_target);
+
+        assert!(crate_file_path.contains(project_dir_path));
+        assert!(crate_file_path.contains("target"));
+        assert!(crate_file_path.contains(android_target));
+        assert!(crate_file_path.contains("release"));
+    }
+
+    #[test]
+    fn proper_project_dir_path() {
+        let project_dir_path = &project_dir_path();
+
+        assert!(project_dir_path.contains("rust-library"));
     }
 }
