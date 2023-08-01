@@ -12,7 +12,7 @@ Each sub-project contains proper README files with information and instructions 
 
 A bunch of blog posts are worth reading with deeper explanations:
 
- - [Rust cross-platform... The Android part...]().
+ - [Rust cross-platform... The Android part...](https://fernandocejas.com/blog/engineering/2023-07-27-rust-cross-platform-android/).
  - [Rust cross-platform... The iOS part...]().
  - [Rust cross-platform... The Web part...]().
 
