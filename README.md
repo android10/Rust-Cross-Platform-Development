@@ -1,17 +1,27 @@
 # Architecture: Rust Programming Language Cross-Platform Development
 
-This is still a WIP but the idea is to create a tiny RUST project that could be used cross-platform:
+This repository aims to cover The Rust Programming Language integration with other Platforms:
 
- - **ANDROID:** Via Android NDK.
- - **WEB:** Via WebAssembly.
- - **CLI:** Pure Rust Command Line Application.
+ - **[ANDROID](android-sample/):** Via Android NDK.
+ - **[WEB](web-sample/):** Via WebAssembly.
+ - **[CLI](cli-sample/):** Pure Rust Command Line Application.
 
-# TODO
+# How to use this repo
 
- - [ ] PR Accepted: iOS Application.
- - [ ] PR Accepted: Rust Desktop Application.
- - [ ] PR Accepted: Rust Backend.
- - [ ] PR Accepted: Web App using WASM.
+Each sub-project contains proper README files with information and instructions for local development and project running.  
+
+A bunch of blog posts are worth reading with deeper explanations:
+
+ - [Rust cross-platform... The Android part...]().
+ - [Rust cross-platform... The iOS part...]().
+ - [Rust cross-platform... The Web part...]().
+
+# TODOs
+
+ - [ ] iOS Application (WIP)
+ - [ ] Web App using WASM: **PR Accepted**
+ - [ ] Rust CLI Application: **PR Accepted**
+ - [ ] Rust Desktop Application: **PR Accepted**
 
 ## License
 
