@@ -14,7 +14,8 @@ In order to **get started,** please refer to the the following **article/post** 
 
 ### Local Development
 
-Please import the project on Android Studio and you are ready to go. 
+ - Import the project on **Android Studio**, **run the app**, and you are ready to go.
+ - If you want to **re-build the rust part,** please go to the [`rust-library`](../rust-library) folder and check the available commands. 
 
 ## License
 
