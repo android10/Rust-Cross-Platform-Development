@@ -4,7 +4,7 @@
 
 In order to fully understand the purpose of this repo, please refer to the follwing blog posts:
 
- - **TODO:** Blog Post one
+ - [Rust cross-platform... The Android part...](https://fernandocejas.com/blog/engineering/2023-07-27-rust-cross-platform-android/).
  - **TODO:** Blog Post two
  - **TODO:** Blog Post three
 
