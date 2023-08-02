@@ -1,8 +1,8 @@
-## Rust Crypto Library
+## Rust Crypto Library (Encryption/Decryption)
 
-**Crypto** is a sample **Rust Library** that showcases **cross-platform compilation for different projects and environments**. In terms of functinality it only simulates **'encryption/decryption'** by using `base64 encoding/decoding`. This is just for **LEARNING PURPOSE**. 
+**Crypto** is a SAMPLE **Rust Crate** that showcases **cross-platform compilation for different projects and environments**. In terms of functinality and for **LEARNING PURPOSE**, it simulates **'encryption/decryption'** by using `base64 encoding/decoding`. 
 
-In order to fully understand the purpose of this repo, please refer to the follwing blog posts:
+In order to **fully understand the purpose of this repo**, please refer to the follwing blog posts:
 
  - [Rust cross-platform... The Android part...](https://fernandocejas.com/blog/engineering/2023-07-27-rust-cross-platform-android/).
  - **TODO:** Blog Post two
@@ -16,9 +16,10 @@ In order to fully understand the purpose of this repo, please refer to the follw
 ## Sub-projects
 
 The Crypto Library is composed by a [Rust Workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html) containing a [set of crates](Cargo.toml) (listed below).
+
 ### cryptor
 
-It is the core domain library, which contains the main logic for **encryption/decryption.**
+It is the **core domain library**, which contains the main logic for **encryption/decryption.**
 
 **Available commands:**
 
@@ -29,7 +30,7 @@ $ cargo test                //run all the tests.
 ```
 ### cryptor_jni
 
-This crate fully depends on the `crypto` crate and its main purpose is to act as a proxy between Rust and Android (Java/Kotlin) via JNI.  
+This crate fully depends on the `crypto` crate and its main purpose is to **act as a proxy between Rust and Android (Java/Kotlin) via JNI**.  
 
 **Available commands:**
 
@@ -42,7 +43,7 @@ $ cargo test                    //run all the tests.
 
 ### cryptor_c
 
-Still a TODO
+ - Still a **TODO**
 
 ## Rust Useful References
 

@@ -4,7 +4,7 @@ In order to **get started,** please refer to the the following **article/post** 
 
 - [Rust cross-platform... The Android part...](https://fernandocejas.com/blog/engineering/2023-07-27-rust-cross-platform-android/).
 
-### This Project
+## The Idea
 
 **A picture worth a thousand words!** Here is a summary of what this repo tries to accomplished:
 
@@ -12,10 +12,16 @@ In order to **get started,** please refer to the the following **article/post** 
   <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/18d8a3f2-a487-4b2a-9000-1e4e52ab58d3" width="400" alt="rust-cross-platform-project-overview"/>
 </p>
 
+### Running this project
+
+1. Install the [Android SDK](https://developer.android.com/studio).
+2. Install the [Android NDK](https://developer.android.com/ndk/).
+3. Open Android Studio and import the `build.gradle.kts` file as a new project.
+4. Run the App.
+
 ### Local Development
 
- - Import the project on **Android Studio**, **run the app**, and you are ready to go.
- - If you want to **re-build the rust part,** please go to the [`rust-library`](../rust-library) folder and check the available commands. 
+ - If you want to **re-build the rust part,** please go to the [`rust-library`](../rust-library) folder and check the [available commands and documentation](../rust-library#cryptor_jni) over there.  
 
 ## License
 
