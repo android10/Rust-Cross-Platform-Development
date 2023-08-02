@@ -15,7 +15,7 @@ In order to fully understand the purpose of this repo, please refer to the follw
 
 ## Sub-projects
 
-The Crypto Library is composed by a [Rust Workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html) containing a set of crates (listed below).
+The Crypto Library is composed by a [Rust Workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html) containing a [set of crates](Cargo.toml) (listed below).
 ### cryptor
 
 It is the core domain library, which contains the main logic for **encryption/decryption.**
