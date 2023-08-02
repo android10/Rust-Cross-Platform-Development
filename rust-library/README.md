@@ -17,31 +17,38 @@ In order to **fully understand the purpose of this repo**, please refer to the f
 
 The Crypto Library is composed by a [Rust Workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html) containing a [set of crates](Cargo.toml) (listed below).
 
-### cryptor
+### **cryptor**
 
 It is the **core domain library**, which contains the main logic for **encryption/decryption.**
 
-**Available commands:**
+#### Available commands
 
 ```bash
-$ cargo build               //build the debug version of the project.
-$ cargo build --release     //build the release version of the project.
-$ cargo test                //run all the tests.
+$ cargo build               // build the debug version of the project.
+$ cargo build --release     // build the release version of the project.
+$ cargo test                // run all the tests.
 ```
-### cryptor_jni
+### **cryptor_jni**
 
 This crate fully depends on the `crypto` crate and its main purpose is to **act as a proxy between Rust and Android (Java/Kotlin) via JNI**.  
 
-**Available commands:**
+#### Project Configuration
+
+1. Install the [Android SDK](https://developer.android.com/studio) and [Android NDK](https://developer.android.com/ndk/). 
+2. Make sure your `$ANDROID_HOME` is pointing to your SDK location. Mine: `/home/fernando/Android/Sdk`.
+3. Check that your `Android NDK` version matches the one inside the [jni_crypto build.rs file](https://github.com/android10/Rust-Cross-Platform-Development/blob/main/rust-library/cryptor_jni/build.rs). 
+    - In my case `$ANDROID_HOME/ndk/25.2.9519653` matches with `ANDROID_NDK_VERSION = "25.2.9519653"` inside `build.rs` file.
+
+#### Available commands
 
 ```bash
-$ cargo build                   //build the debug version of the project.
-$ cargo build --bin release     //build the release version of the project for all android targets.
-$ cargo build --bin publish     //copy all the released libraries/crates inside the android project.
-$ cargo test                    //run all the tests.
+$ cargo build                   // build the debug version of the project.
+$ cargo build --bin release     // build the release version of the project for all android targets.
+$ cargo build --bin publish     // copy all the released libraries/crates inside the android project.
+$ cargo test                    // run all the tests.
 ```
 
-### cryptor_c
+### **cryptor_c**
 
  - Still a **TODO**
 
