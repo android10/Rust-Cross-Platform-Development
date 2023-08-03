@@ -18,7 +18,7 @@ In order to **fully understand the purpose of this repo**, please refer to the f
 The Crypto Library is composed by a [Rust Workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html) containing a [set of crates](Cargo.toml).
 
 <p align="center">
- <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/cf9a519a-03b1-4b1f-b71f-d36b47784d66" width="300" alt="rust-cross-platform-crypto-project-overview"/>
+ <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/cf9a519a-03b1-4b1f-b71f-d36b47784d66" width="500" alt="rust-cross-platform-crypto-project-overview"/>
 </p>
 
 ### **cryptor**
