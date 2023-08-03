@@ -42,10 +42,10 @@ This crate fully depends on the `crypto` crate and its main purpose is to **act 
 #### Available commands
 
 ```bash
-$ cargo build                   // build the debug version of the project.
-$ cargo build --bin release     // build the release version of the project for all android targets.
-$ cargo build --bin publish     // copy all the released libraries/crates inside the android project.
-$ cargo test                    // run all the tests.
+$ cargo build                 // build the debug version of the project.
+$ cargo run --bin release     // build the release version of the project for all android targets.
+$ cargo run --bin publish     // copy all the released libraries/crates inside the android project.
+$ cargo test                  // run all the tests.
 ```
 
 ### **cryptor_c**

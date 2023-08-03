@@ -7,9 +7,9 @@ This repository aims to cover The Rust Programming Language integration with oth
  - **[WEB](web-sample/):** via WebAssembly.
  - **[DESKTOP](desktop-sample/):** via [Tauri](https://tauri.app/).
 
+At the moment ONLY the Android Part is done:
+
 <p align="center">
- <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/18d8a3f2-a487-4b2a-9000-1e4e52ab58d3" width="300" alt="rust-cross-platform-project-overview"/>
- <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/18d8a3f2-a487-4b2a-9000-1e4e52ab58d3" width="300" alt="rust-cross-platform-project-overview"/>
  <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/18d8a3f2-a487-4b2a-9000-1e4e52ab58d3" width="300" alt="rust-cross-platform-project-overview"/>
 </p>
 
