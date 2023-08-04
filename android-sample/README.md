@@ -9,6 +9,12 @@ In order to **get started,** please refer to the the following **article/post** 
 **A picture worth a thousand words!** Here is a summary of what this repo tries to accomplished:
 
 <p align="center">
+  <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/04cbde40-1d4e-4f8d-8619-30142e186c25" width="400" alt="rust-cross-platform-project-overview"/>
+</p>
+
+And here the **implemantion details:**
+
+<p align="center">
   <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/18d8a3f2-a487-4b2a-9000-1e4e52ab58d3" width="400" alt="rust-cross-platform-project-overview"/>
 </p>
 
