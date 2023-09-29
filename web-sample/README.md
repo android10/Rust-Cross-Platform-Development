@@ -81,6 +81,13 @@ pnpm test:e2e
 pnpm lint
 ```
 
+## References
+
+ - https://vitejs.dev/guide/ 
+ - https://vitest.dev/guide/ 
+ - https://vuejs.org/guide/
+ - https://github.com/vuejs/language-tools 
+
 ## License
 
     Copyright 2023 Fernando Cejas
