@@ -22,6 +22,10 @@ And here the **implemantion details:**
 
 TODO
 
+## Recommended `nodejs` version
+
+ - If you use [asdf-vm](https://asdf-vm.com/) as **Version Manager**, please check the [.tool-versions](.tool-versions) file.
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
@@ -87,6 +91,7 @@ pnpm lint
  - https://vitest.dev/guide/ 
  - https://vuejs.org/guide/
  - https://github.com/vuejs/language-tools 
+ - https://pinia.vuejs.org/
 
 ## License
 
