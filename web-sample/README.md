@@ -76,7 +76,7 @@ pnpm lint
  - https://vuejs.org/guide/
  - https://github.com/vuejs/language-tools 
  - https://pinia.vuejs.org/
- - https://github.com/vuejs/awesome-vue 
+ - https://github.com/vuejs/awesome-vue
 
 ## License
 
