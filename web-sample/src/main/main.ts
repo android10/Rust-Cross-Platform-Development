@@ -9,5 +9,4 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 
-// https://vuejs.org/guide/essentials/application.html#mounting-the-app
 app.mount('#app')

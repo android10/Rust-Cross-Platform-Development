@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from '@/main/core/components/HelloWorld.vue'
+import AppHeader from '@/main/core/home/components/AppHeader.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="/img/logo.svg" width="125" height="125" />
+    <img alt="App logo" class="logo" src="/img/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <AppHeader msg="You did it!" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
