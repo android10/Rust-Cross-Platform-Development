@@ -6,7 +6,7 @@ In order to **get started,** please refer to the the following **article/post** 
 
 ## The Idea
 
-**A picture worth a thousand words!** Here is a summary of what this repo tries to accomplished:
+**A picture worth a thousand words!** Here is a summary of what this repo tries to accomplish:
 
 <p align="center">
   <img src="https://github.com/android10/Rust-Cross-Platform-Development/assets/1360604/04cbde40-1d4e-4f8d-8619-30142e186c25" width="400" alt="rust-cross-platform-project-overview"/>
